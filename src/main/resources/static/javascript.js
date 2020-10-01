@@ -39,12 +39,19 @@ window.onload = function () {
         plane.position.z = 15;
         scene.add(plane);
 
-        let light = new THREE.AmbientLight(0x404040);
-        light.intensity = 4;
-        scene.add(light);
+        addLights();
+    }
 
+    function addLights() {
+            let light = new THREE.AmbientLight(0xffffff);
+            light.intensity = 0.5;
+            scene.add(light);
 
- }
+            let pointLight1 = new THREE.PointLight(0xffffff);
+            pointLight1.intensity = 1;
+            pointLight1.position.set(20, 20, 20);
+            scene.add(pointLight1);
+    }
 
     function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
@@ -65,6 +72,7 @@ window.onload = function () {
         scene.add(group);
         worldObjects[uuid] = group;
     }
+
 
     /*
      * Hier wordt de socketcommunicatie geregeld. Er wordt een nieuwe websocket aangemaakt voor het webadres dat we in
