@@ -1,4 +1,5 @@
 //import * as THREE from './three.min.js';
+//import "GLTFLoader";
 
 import {createObject} from "./objects.js";
 
@@ -41,7 +42,9 @@ window.onload = function () {
         let light = new THREE.AmbientLight(0x404040);
         light.intensity = 4;
         scene.add(light);
-    }
+
+
+ }
 
     function onWindowResize() {
         camera.aspect = window.innerWidth / window.innerHeight;
