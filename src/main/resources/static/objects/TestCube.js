@@ -1,4 +1,4 @@
-function createTestCube() {
+/*function createTestCube() {
 
     let cube;
 
@@ -9,9 +9,9 @@ function createTestCube() {
     });
 
     return cube;
-}
+}*/
 
-/* Oude code
+
 function createTestCube() {
     const width = 1;
     const height = 1;
@@ -34,6 +34,6 @@ function createTestCube() {
 
     return cube;
 }
-*/
+
 
 export {createTestCube};

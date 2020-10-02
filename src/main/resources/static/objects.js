@@ -3,14 +3,24 @@ import {createTestCube} from "./objects/TestCube.js";
 import {createStellage} from "./objects/Stellage.js";
 
 function createObject(objectName) {
+
+    let newObject;
+
     switch (objectName) {
         case "robot":
-            return createRobot();
+            newObject = createRobot();
+            break;
         case "testcube":
-            return createTestCube();
+            newObject = createTestCube();
+            break;
         case "stellage":
-            return createStellage();
+            newObject = createStellage();
+            break;
     }
+
+    newObject.castShadow = true;
+
+    return newObject;
 };
 
 export {createObject};

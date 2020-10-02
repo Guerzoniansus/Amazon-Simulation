@@ -27,30 +27,44 @@ window.onload = function () {
         renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize(window.innerWidth, window.innerHeight + 5);
+        renderer.shadowMap.enabled = true;
         document.body.appendChild(renderer.domElement);
 
         window.addEventListener('resize', onWindowResize, false);
 
+        addGround();
+        addLights();
+    }
+
+    function addGround() {
         let geometry = new THREE.PlaneGeometry(30, 30, 32);
-        let material = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+        let material = new THREE.MeshStandardMaterial(
+            {
+            side: THREE.DoubleSide,
+            roughness: 0.8,
+            metalness: 0.7,
+            map: new THREE.TextureLoader().load("textures/metal_ground.jpg")
+            }
+        );
+
         let plane = new THREE.Mesh(geometry, material);
         plane.rotation.x = Math.PI / 2.0;
         plane.position.x = 15;
         plane.position.z = 15;
+        plane.receiveShadow = true;
         scene.add(plane);
-
-        addLights();
     }
 
     function addLights() {
-            let light = new THREE.AmbientLight(0xffffff);
-            light.intensity = 0.5;
-            scene.add(light);
+        let light = new THREE.AmbientLight(0xffffff);
+        light.intensity = 0.5;
+        scene.add(light);
 
-            let pointLight1 = new THREE.PointLight(0xffffff);
-            pointLight1.intensity = 1;
-            pointLight1.position.set(20, 20, 20);
-            scene.add(pointLight1);
+        let pointLight1 = new THREE.PointLight(0xffffff);
+        pointLight1.intensity = 1;
+        pointLight1.position.set(20, 20, 20);
+        pointLight1.castShadow = true;
+        scene.add(pointLight1);
     }
 
     function onWindowResize() {
