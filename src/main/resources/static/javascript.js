@@ -14,7 +14,7 @@ window.onload = function () {
     let cameraControls;
 
     let worldObjects = {};
-    
+
     // Loading 3D models costs time, checking simple strings doesn't.
     // This list is used to check if an object "exists", even when it's not loaded onto the scene yet
     // to prevent multiple objects being made with the same UUID.
