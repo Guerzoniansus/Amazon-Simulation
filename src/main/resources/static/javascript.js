@@ -43,9 +43,16 @@ window.onload = function () {
     }
 
     function addLights() {
-            let light = new THREE.AmbientLight(0xffffff);
-            light.intensity = 0.5;
+            let light = new THREE.AmbientLight(0x404040, 100); //ffffff
+            //light.intensity = 0.5;
             scene.add(light);
+            let test;
+            let loader = new THREE.GLTFLoader();
+
+                loader.load('textures/model.gltf', function(gltf) {
+                test = gltf.scene;
+                scene.add(test);
+                });
 
             let pointLight1 = new THREE.PointLight(0xffffff);
             pointLight1.intensity = 1;

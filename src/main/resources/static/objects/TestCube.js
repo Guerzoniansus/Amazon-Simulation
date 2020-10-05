@@ -1,6 +1,6 @@
 function createTestCube() {
 
-    let cube;
+    let cube = new THREE.Object3D;
 
     let loader = new THREE.GLTFLoader();
 
