@@ -1,4 +1,4 @@
-function createRobot() {
+function createRobot(addFunction, uuid) {
     const geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
 
     const cubeMaterials = [
@@ -15,7 +15,7 @@ function createRobot() {
     let robot = new THREE.Mesh(geometry, material);
     robot.position.y = 0.15;
 
-    return robot;
+    addFunction(robot, uuid);
 }
 
 export {createRobot};

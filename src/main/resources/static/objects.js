@@ -2,14 +2,17 @@ import {createRobot} from './objects/Robot.js';
 import {createTestCube} from "./objects/TestCube.js";
 import {createStellage} from "./objects/Stellage.js";
 
-function createObject(objectName) {
+function createObject(objectName, addFunction, uuid) {
     switch (objectName) {
         case "robot":
-            return createRobot();
+            createRobot(addFunction, uuid);
+            break;
         case "testcube":
-            return createTestCube();
+            createTestCube(addFunction, uuid);
+            break;
         case "stellage":
-            return createStellage();
+            createStellage(addFunction, uuid);
+            break;
     }
 };
 

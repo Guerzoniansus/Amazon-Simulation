@@ -14,6 +14,12 @@ window.onload = function () {
     let cameraControls;
 
     let worldObjects = {};
+    
+    // Loading 3D models costs time, checking simple strings doesn't.
+    // This list is used to check if an object "exists", even when it's not loaded onto the scene yet
+    // to prevent multiple objects being made with the same UUID.
+    let usedUUIDs = [];
+
 
     function init() {
         camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
@@ -43,21 +49,14 @@ window.onload = function () {
     }
 
     function addLights() {
-            let light = new THREE.AmbientLight(0x404040, 100); //ffffff
-            //light.intensity = 0.5;
-            scene.add(light);
-            let test;
-            let loader = new THREE.GLTFLoader();
+        let light = new THREE.AmbientLight(0x404040, 100); //ffffff
+        light.intensity = 0.5;
+        scene.add(light);
 
-                loader.load('textures/model.gltf', function(gltf) {
-                test = gltf.scene;
-                scene.add(test);
-                });
-
-            let pointLight1 = new THREE.PointLight(0xffffff);
-            pointLight1.intensity = 1;
-            pointLight1.position.set(20, 20, 20);
-            scene.add(pointLight1);
+        let pointLight1 = new THREE.PointLight(0xffffff);
+        pointLight1.intensity = 1;
+        pointLight1.position.set(20, 20, 20);
+        scene.add(pointLight1);
     }
 
     function onWindowResize() {
@@ -96,9 +95,12 @@ window.onload = function () {
 
             // Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
             // dan wordt het 3D model eerst aangemaakt in de 3D wereld.
-            if (Object.keys(worldObjects).indexOf(command.parameters.uuid) < 0) {
-                let newObject = createObject(command.parameters.type);
-                addObject(newObject, command.parameters.uuid);
+            if (Object.keys(worldObjects).indexOf(command.parameters.uuid) < 0
+            && usedUUIDs.includes(command.parameters.uuid) == false) {
+
+                usedUUIDs.push(command.parameters.uuid);
+                createObject(command.parameters.type, addObject, command.parameters.uuid);
+
             }
 
             /*
