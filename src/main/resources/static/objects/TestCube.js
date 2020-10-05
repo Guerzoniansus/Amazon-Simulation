@@ -1,6 +1,4 @@
-function createTestCube() {
-
-    //let cube = new THREE.Object3D;
+function createTestCube(addFunction, uuid) {
 
     let loader = new THREE.GLTFLoader();
 
@@ -9,7 +7,6 @@ function createTestCube() {
         addFunction(cube, uuid);
     });
 
-    return cube;
 }
 
 /* Oude code

@@ -88,6 +88,8 @@ window.onload = function () {
     }
 
     function addObject(object, uuid) {
+        object.castShadow = true;
+
         let group = new THREE.Group();
         group.add(object);
 
