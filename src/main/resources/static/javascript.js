@@ -9,6 +9,9 @@ function parseCommand(input = "") {
 
 let socket;
 
+const TEXTURE_LOADER = new THREE.TextureLoader();
+const GLTF_LOADER = new THREE.GLTFLoader();
+
 window.onload = function () {
     let camera, scene, renderer;
     let cameraControls;
@@ -87,6 +90,7 @@ window.onload = function () {
         renderer.render(scene, camera);
     }
 
+    // Add an object to the scene and to the worldObjects
     function addObject(object, uuid) {
         object.castShadow = true;
 

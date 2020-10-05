@@ -15,7 +15,7 @@ package com.nhlstenden.amazonsimulatie.models;
  * mogelijkheden kunnen zijn zodat de view toch bij de updatemethode van de robot kan komen. Deze mag
  * alleen de World class aanroepen, dus dat zou onveilige software betekenen.
  */
-public class ProxyObject3D implements Object3D {
+public class ProxyObject3D extends Object3D {
     private Object3D object;
 
     public ProxyObject3D(Object3D object) {

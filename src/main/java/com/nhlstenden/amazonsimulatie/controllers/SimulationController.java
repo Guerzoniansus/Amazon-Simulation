@@ -14,6 +14,8 @@ import com.nhlstenden.amazonsimulatie.views.View;
  */
 public class SimulationController extends Controller {
 
+    private static final int FRAMERATE = 1000 / 30; // 30 fps
+
     public SimulationController(Model model) {
         super(model); //Met dit onderdeel roep je de constructor aan van de superclass (Controller)
     }
@@ -32,7 +34,7 @@ public class SimulationController extends Controller {
             this.getModel().update();
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(FRAMERATE);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

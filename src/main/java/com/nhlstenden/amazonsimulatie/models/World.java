@@ -33,10 +33,7 @@ public class World implements Model {
      */
     public World() {
         this.worldObjects = new ArrayList<>();
-        this.worldObjects.add(new Robot());
-        this.worldObjects.add(new TestCube());
-        //this.worldObjects.add(new Stellage());
-
+        SceneBuilder.buildScene(worldObjects);
     }
 
     /*

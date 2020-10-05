@@ -4,13 +4,22 @@ function createTestCube(addFunction, uuid) {
 
     loader.load('textures/model.gltf', function(gltf) {
         let cube = gltf.scene;
+
+        cube.traverse(function(node) {
+            if (node.isMesh) {
+                node.castShadow = true;
+            }
+        });
+
         addFunction(cube, uuid);
     });
 
 }
 
+export {createTestCube};
+
 /* Oude code
-function createTestCube() {
+function createTestCube(addFunction, uuid) {
     const width = 1;
     const height = 1;
     const depth = 1;
@@ -21,7 +30,7 @@ function createTestCube() {
 
     const material = new THREE.MeshPhongMaterial(
         {
-            map: textureLoader.load("textures/TestCube.jpg")
+            map: textureLoader.load("textures/test_cube.jpg")
         }
     );
 
@@ -30,8 +39,7 @@ function createTestCube() {
     cube.position.y = 1;
     cube.position.z = 0;
 
-    return cube;
+    addFunction(cube, uuid);
 }
 */
 
-export {createTestCube};

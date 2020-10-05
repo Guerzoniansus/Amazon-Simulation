@@ -3,22 +3,20 @@ package com.nhlstenden.amazonsimulatie.models;
 import java.util.UUID;
 
 
-class Stellage implements Object3D, Updatable {
-    private UUID uuid;
+class Stellage extends Object3D implements Updatable {
 
-    private double x = 15;
-    private double y = 0;
-    private double z = 15;
 
-    private double rotationX = 0;
-    private double rotationY = 0;
-    private double rotationZ = 0;
-
-    public Stellage() {
-        this.uuid = UUID.randomUUID();
+    Stellage() {
+        super();
     }
 
+    Stellage(double x, double y, double z) {
+        super(x, y, z);
+    }
 
+    Stellage(double x, double y, double z, double rotationX, double rotationY, double rotationZ) {
+        super(x, y, z, rotationX, rotationY, rotationZ);
+    }
 
     @Override
     public boolean update() {
@@ -27,44 +25,4 @@ class Stellage implements Object3D, Updatable {
         return true;
     }
 
-    @Override
-    public String getUUID() {
-        return this.uuid.toString();
-    }
-
-    @Override
-    public String getType() {
-
-        return Stellage.class.getSimpleName().toLowerCase();
-    }
-
-    @Override
-    public double getX() {
-        return this.x;
-    }
-
-    @Override
-    public double getY() {
-        return this.y;
-    }
-
-    @Override
-    public double getZ() {
-        return this.z;
-    }
-
-    @Override
-    public double getRotationX() {
-        return this.rotationX;
-    }
-
-    @Override
-    public double getRotationY() {
-        return this.rotationY;
-    }
-
-    @Override
-    public double getRotationZ() {
-        return this.rotationZ;
-    }
 }
