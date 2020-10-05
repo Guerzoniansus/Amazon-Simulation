@@ -35,7 +35,7 @@ public class World implements Model {
         this.worldObjects = new ArrayList<>();
         this.worldObjects.add(new Robot());
         this.worldObjects.add(new TestCube());
-        this.worldObjects.add(new Stellage());
+        //this.worldObjects.add(new Stellage());
 
     }
 

@@ -2,25 +2,18 @@ import {createRobot} from './objects/Robot.js';
 import {createTestCube} from "./objects/TestCube.js";
 import {createStellage} from "./objects/Stellage.js";
 
-function createObject(objectName) {
-
-    let newObject;
-
+function createObject(objectName, addFunction, uuid) {
     switch (objectName) {
         case "robot":
-            newObject = createRobot();
+            createRobot(addFunction, uuid);
             break;
         case "testcube":
-            newObject = createTestCube();
+            createTestCube(addFunction, uuid);
             break;
         case "stellage":
-            newObject = createStellage();
+            createStellage(addFunction, uuid);
             break;
     }
-
-    newObject.castShadow = true;
-
-    return newObject;
 };
 
 export {createObject};

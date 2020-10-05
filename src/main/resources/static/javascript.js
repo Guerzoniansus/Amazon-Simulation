@@ -15,6 +15,12 @@ window.onload = function () {
 
     let worldObjects = {};
 
+    // Loading 3D models costs time, checking simple strings doesn't.
+    // This list is used to check if an object "exists", even when it's not loaded onto the scene yet
+    // to prevent multiple objects being made with the same UUID.
+    let usedUUIDs = [];
+
+
     function init() {
         camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
         cameraControls = new THREE.OrbitControls(camera);
@@ -53,6 +59,8 @@ window.onload = function () {
         plane.position.z = 15;
         plane.receiveShadow = true;
         scene.add(plane);
+
+        addLights();
     }
 
     function addLights() {
@@ -103,9 +111,12 @@ window.onload = function () {
 
             // Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
             // dan wordt het 3D model eerst aangemaakt in de 3D wereld.
-            if (Object.keys(worldObjects).indexOf(command.parameters.uuid) < 0) {
-                let newObject = createObject(command.parameters.type);
-                addObject(newObject, command.parameters.uuid);
+            if (Object.keys(worldObjects).indexOf(command.parameters.uuid) < 0
+            && usedUUIDs.includes(command.parameters.uuid) == false) {
+
+                usedUUIDs.push(command.parameters.uuid);
+                createObject(command.parameters.type, addObject, command.parameters.uuid);
+
             }
 
             /*

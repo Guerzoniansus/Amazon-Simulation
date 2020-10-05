@@ -1,17 +1,18 @@
-/*function createTestCube() {
+function createTestCube() {
 
-    let cube;
+    //let cube = new THREE.Object3D;
 
     let loader = new THREE.GLTFLoader();
 
     loader.load('textures/model.gltf', function(gltf) {
-    cube = gltf.scene;
+        let cube = gltf.scene;
+        addFunction(cube, uuid);
     });
 
     return cube;
-}*/
+}
 
-
+/* Oude code
 function createTestCube() {
     const width = 1;
     const height = 1;
@@ -34,6 +35,6 @@ function createTestCube() {
 
     return cube;
 }
-
+*/
 
 export {createTestCube};
