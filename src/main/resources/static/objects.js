@@ -21,18 +21,24 @@ function createRobot(addFunction, uuid) {
 export {createRobot}
 */
 
-function createObject(objectName, addFunction, uuid) {
+/**
+ * Create a new object
+ * @param {string} objectName - The name of the object as received from the server
+ * @param {function} addFunction - The function an object needs to call on its own to add itself to the scene
+ * @param {string} UUID - The UUID of the object
+ */
+function createObject(objectName, addFunction, UUID) {
     switch (objectName) {
         case "robot":
-            createRobot(addFunction, uuid);
+            createRobot(addFunction, UUID);
             break;
         case "testcube":
-            createTestCube(addFunction, uuid);
+            createTestCube(addFunction, UUID);
             break;
         case "stellage":
-            createStellage(addFunction, uuid);
+            createStellage(addFunction, UUID);
             break;
     }
-};
+}
 
 export {createObject};
