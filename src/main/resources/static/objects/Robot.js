@@ -12,9 +12,8 @@ function createRobot(addFunction, uuid) {
         new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
     ];
 
-    const material = new THREE.MeshFaceMaterial(cubeMaterials);
 
-    let robot = new THREE.Mesh(geometry, material);
+    let robot = new THREE.Mesh(geometry, cubeMaterials);
     robot.position.y = 0.15;
 
     addFunction(robot, uuid);

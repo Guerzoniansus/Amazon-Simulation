@@ -23,12 +23,16 @@ let usedUUIDs = [];
  * Initialize the scene
  */
 function init() {
-    camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 1, 1000);
+    const fov = 70;
+    const near = 1;
+    const far = 1500;
+    camera = new THREE.PerspectiveCamera(fov, window.innerWidth / window.innerHeight, near, far);
     cameraControls = new THREE.OrbitControls(camera);
     camera.position.z = 15;
     camera.position.y = 5;
     camera.position.x = 15;
     cameraControls.update();
+
     scene = new THREE.Scene();
 
     renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -39,8 +43,33 @@ function init() {
 
     window.addEventListener('resize', onWindowResize, false);
 
+    addSkybox();
     addGround();
     addLights();
+}
+
+function addSkybox() {
+    const boxGeometry = new THREE.BoxGeometry(500, 50, 500);
+
+    const textureLoader = new THREE.TextureLoader();
+    const groundTexture = textureLoader.load("textures/background_4.jpg");
+    groundTexture.wrapS = THREE.RepeatWrapping;
+    groundTexture.wrapT = THREE.RepeatWrapping;
+    groundTexture.repeat.set(30, 30);
+
+    const boxMaterials = [
+        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_2.jpg"), side: THREE.DoubleSide }), //LEFT
+        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_1.jpg"), side: THREE.DoubleSide }), //RIGHT
+        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_3.jpg"), side: THREE.DoubleSide }), //TOP
+        new THREE.MeshBasicMaterial({ map: groundTexture, side: THREE.DoubleSide }), //BOTTOM
+        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_5.jpg"), side: THREE.DoubleSide }), //FRONT
+        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_6.jpg"), side: THREE.DoubleSide }), //BACK
+    ];
+
+    const skybox = new THREE.Mesh(boxGeometry, boxMaterials);
+    skybox.position.y = 24;
+
+    scene.add(skybox);
 }
 
 /**
