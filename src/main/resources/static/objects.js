@@ -1,6 +1,7 @@
 import {createRobot} from './objects/Robot.js';
 import {createTestCube} from "./objects/TestCube.js";
 import {createStellage} from "./objects/Stellage.js";
+import {createTruck} from "./objects/Truck.js"
 
 /*
 To add an object:
@@ -37,6 +38,9 @@ function createObject(objectName, addFunction, UUID) {
             break;
         case "stellage":
             createStellage(addFunction, UUID);
+            break;
+        case "truck":
+            createTruck(addFunction, uuid);
             break;
     }
 }
