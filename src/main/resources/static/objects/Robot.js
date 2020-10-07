@@ -4,12 +4,12 @@ function createRobot(addFunction, uuid) {
     const textureLoader = new THREE.TextureLoader();
 
     const cubeMaterials = [
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
+        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
+        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
+        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
+        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
+        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
+        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
     ];
 
 
