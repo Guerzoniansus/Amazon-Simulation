@@ -5,8 +5,11 @@ import java.util.UUID;
 
 public abstract class Object3D {
 
+    protected World world;
+
     protected UUID uuid;
 
+    protected Node node;
     protected double x;
     protected double y;
     protected double z;
@@ -15,19 +18,17 @@ public abstract class Object3D {
     protected double rotationY;
     protected double rotationZ;
 
-    public Object3D() {
-        this(0, 0, 0, 0, 0, 0);
+    public Object3D(Node node, World world) {
+        this(node, world, 0, 0, 0);
     }
 
-    public Object3D(double x, double y, double z) {
-        this(x, y, z, 0, 0, 0);
-    }
-
-    public Object3D(double x, double y, double z, double rotationX, double rotationY, double rotationZ) {
+    public Object3D(Node node, World world, double rotationX, double rotationY, double rotationZ) {
+        this.world = world;
+        this.node = node;
         this.uuid = UUID.randomUUID();
-        this.x = x;
-        this.y = y;
-        this.z = z;
+        this.x = node.getX();
+        this.y = node.getY();
+        this.z = node.getZ();
         this.rotationX = rotationX;
         this.rotationY = rotationY;
         this.rotationZ = rotationZ;
@@ -54,6 +55,14 @@ public abstract class Object3D {
          */
         return this.getClass().getSimpleName().toLowerCase();
         //return Robot.class.getSimpleName().toLowerCase();
+    }
+
+    /**
+     * Get the current node this object is home to
+     * @return The node
+     */
+    public Node getNode() {
+        return this.node;
     }
 
     /**
@@ -102,5 +111,12 @@ public abstract class Object3D {
      */
     public double getRotationZ() {
         return this.rotationZ;
+    }
+
+    /**
+     * Delete this object from the world
+     */
+    public void destroy() {
+        //TODO: Implement
     }
 }

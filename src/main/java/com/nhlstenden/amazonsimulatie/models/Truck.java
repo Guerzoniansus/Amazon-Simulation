@@ -9,16 +9,12 @@ import java.util.UUID;
  */
 class Truck extends Object3D implements Updatable {
 
-    Truck() {
-        super();
+    Truck(Node node, World world) {
+        super(node, world);
     }
 
-    Truck(double x, double y, double z) {
-        super(x, y, z);
-    }
-
-    Truck(double x, double y, double z, double rotationX, double rotationY, double rotationZ) {
-        super(x, y, z, rotationX, rotationY, rotationZ);
+    Truck(Node node, World world, double rotationX, double rotationY, double rotationZ) {
+        super(node, world, rotationX, rotationY, rotationZ);
     }
 
     @Override

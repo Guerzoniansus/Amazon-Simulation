@@ -10,18 +10,14 @@ class TestCube extends Object3D implements Updatable {
 
     private Direction direction;
 
-    TestCube() {
-        super();
+
+    TestCube(Node node, World world) {
+        super(node, world);
         this.direction = Direction.NORTH;
     }
 
-    TestCube(double x, double y, double z) {
-        super(x, y, z);
-        this.direction = Direction.NORTH;
-    }
-
-    TestCube(double x, double y, double z, double rotationX, double rotationY, double rotationZ) {
-        super(x, y, z, rotationX, rotationY, rotationZ);
+    TestCube(Node node, World world, double rotationX, double rotationY, double rotationZ) {
+        super(node, world, rotationX, rotationY, rotationZ);
         this.direction = Direction.NORTH;
     }
 
