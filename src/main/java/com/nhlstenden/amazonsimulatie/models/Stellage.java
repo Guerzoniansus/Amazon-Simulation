@@ -1,26 +1,25 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import java.util.UUID;
-
-
 class Stellage extends Object3D implements Updatable {
 
     private Object3D parent;
     private Node storageLocation;
+    private StellageStatus status;
 
-
-    Stellage(Node node, World world) {
-        super(node, world);
-
-        this.parent = null;
-        this.storageLocation = null;
+    Stellage(StellageStatus status, Node node, World world) {
+        this(status, null, node, world, 0, 0, 0);
     }
 
-    Stellage(Node node, World world, double rotationX, double rotationY, double rotationZ) {
+    Stellage(StellageStatus status, Node storageLocation, Node node, World world) {
+        this(status, storageLocation, node, world, 0, 0, 0);
+    }
+
+    Stellage(StellageStatus status, Node storageLocation, Node node, World world, double rotationX, double rotationY, double rotationZ) {
         super(node, world, rotationX, rotationY, rotationZ);
 
         this.parent = null;
-        this.storageLocation = null;
+        this.storageLocation = storageLocation;
+        this.status = status;
     }
 
     @Override
@@ -49,6 +48,13 @@ class Stellage extends Object3D implements Updatable {
     }
 
     /**
+     * Remove this stellage's parent object (essentially sets it to null)
+     */
+    public void removeParent() {
+        parent = null;
+    }
+
+    /**
      * Check if this stellage has a designated storage location yet
      * @return Whether or not it has been assigned a storage location already
      */
@@ -70,6 +76,29 @@ class Stellage extends Object3D implements Updatable {
      */
     public void setStorageLocation(Node storageLocation) {
         this.storageLocation = storageLocation;
+    }
+
+    /**
+     * Removes this stellage's storage location (essentially sets it to null)
+     */
+    public void removeStoragelocation() {
+        storageLocation = null;
+    }
+
+    /**
+     * Returns the Stellage Status
+     * @return The StellageStatus
+     */
+    public StellageStatus getStatus() {
+        return status;
+    }
+
+    /**
+     * Sets the Stellage Status
+     * @param status The new Stellage Status
+     */
+    public void setStatus(StellageStatus status) {
+        this.status = status;
     }
 
 }

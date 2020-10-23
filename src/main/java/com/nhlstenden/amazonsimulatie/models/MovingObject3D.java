@@ -3,17 +3,15 @@ package com.nhlstenden.amazonsimulatie.models;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public abstract class MovingObject3D extends Object3D {
+abstract class MovingObject3D extends Object3D {
 
-    protected double speed = 1;
+    protected double speed = 0.1;
+
     protected Queue<Node> path;
     protected Node currentDestination;
 
     public MovingObject3D(Node node, World world) {
-        super(node, world);
-
-        path = new LinkedList<>();
-        currentDestination = null;
+        this(node, world, 0, 0, 0);
     }
 
     public MovingObject3D(Node node, World world, double rotationX, double rotationY, double rotationZ) {
@@ -24,8 +22,8 @@ public abstract class MovingObject3D extends Object3D {
     }
 
     /**
-     * Attempt movement and check if any movement was made.
-     * @return True if moved, false if no movement (there is no path).
+     * Attempt movement and check if any movement was made. Updates current node when arrived at a new node.
+     * @return True if moved, false if no movement (there is no path left).
      */
     protected boolean move() {
         if (currentDestination == null) {
@@ -44,9 +42,12 @@ public abstract class MovingObject3D extends Object3D {
          */
 
         if (x == currentDestination.getX() && z == currentDestination.getZ()) {
+            this.node = currentDestination;
+
             if (path.isEmpty()) {
                 // Reached end of path
                 currentDestination = null;
+                onFinishedPath();
             }
 
             else {
@@ -56,6 +57,12 @@ public abstract class MovingObject3D extends Object3D {
 
         return true;
     }
+
+    /**
+     * Event that gets fired when the moving object has reached its destination.
+     * Needs to be overriden and implemented by child classes.
+     */
+    protected abstract void onFinishedPath();
 
     /**
      * Set the path to move through

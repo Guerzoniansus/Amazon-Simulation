@@ -21,6 +21,8 @@ public class World implements Model {
      */
     private List<Object3D> worldObjects;
 
+    private Graph graph;
+
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
      * Het systeem werkt al as-is, dus dit hoeft niet aangepast te worden.
@@ -32,8 +34,11 @@ public class World implements Model {
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
      */
     public World() {
-        this.worldObjects = new ArrayList<>();
-        SceneBuilder.buildScene(worldObjects);
+        SceneBuilder sceneBuilder = new AmazonSceneBuilder();
+        sceneBuilder.buildScene();
+
+        worldObjects = sceneBuilder.getObjects();
+        graph = sceneBuilder.getGraph();
     }
 
     /*
@@ -78,5 +83,13 @@ public class World implements Model {
         }
 
         return returnList;
+    }
+
+    /**
+     * Gets this world's graph
+     * @return The Graph
+     */
+    public Graph getGraph() {
+        return graph;
     }
 }

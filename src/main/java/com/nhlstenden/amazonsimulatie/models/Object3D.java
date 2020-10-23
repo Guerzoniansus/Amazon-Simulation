@@ -3,7 +3,7 @@ package com.nhlstenden.amazonsimulatie.models;
 import java.util.UUID;
 
 
-public abstract class Object3D {
+abstract class Object3D {
 
     protected World world;
 

@@ -1,4 +1,9 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-public class RobotListener {
+public interface RobotListener {
+
+    /**
+     * Event that gets fired when this robot has finished its path
+     */
+    void onFinishedPath();
 }
