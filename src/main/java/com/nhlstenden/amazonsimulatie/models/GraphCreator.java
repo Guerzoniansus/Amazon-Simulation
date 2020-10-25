@@ -16,10 +16,18 @@ class GraphCreator {
         this.textFileName = textFileName;
     }
 
+    /**
+     * Creates and returns a new Graph
+     * @return A new Graph
+     */
     public Graph getGraph() {
         return createGraph();
     }
 
+    /**
+     * Create a graph filled with nodes
+     * @return A graph
+     */
     private Graph createGraph() {
 
         try {
@@ -114,6 +122,11 @@ class GraphCreator {
         return node;
     }
 
+    /**
+     * Creates a connection matrix: for each Node, a 1 will be set for its neighbours, and a 0 for the rest.
+     * @param nodes A collection of nodes
+     * @return A connection matrix / table with 0s and 1s
+     */
     private int[][] createConnectionMatrix(Map<Integer, Node> nodes) {
 
         int[][] connectionMatrix = new int[nodes.size()][nodes.size()];
