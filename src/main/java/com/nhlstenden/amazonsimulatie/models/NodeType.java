@@ -1,5 +1,5 @@
 package com.nhlstenden.amazonsimulatie.models;
 
 public enum NodeType {
-    PATH, LOADING_DOCK, DELIVERABLE;
+    PATH, LOADING_DOCK, STELLAGE;
 }

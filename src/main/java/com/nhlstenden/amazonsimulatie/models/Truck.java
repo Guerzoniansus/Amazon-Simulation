@@ -1,6 +1,7 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Deze class stelt een truck voor. Hij impelementeerd de class Object3D, omdat het ook een
@@ -9,17 +10,21 @@ import java.util.UUID;
  */
 class Truck extends MovingObject3D implements Updatable {
 
-    Truck(Node node, World world) {
-        this(node, world, 0, 0, 0);
+    private static final int startNodeID = 1;
+
+    private List<Stellage> deliveredStellages;
+
+    int stellagesToDeliver = 3;
+    int stellagesToGet = 3;
+
+    Truck(World world) {
+        this(world.getGraph().getNode(startNodeID), world, 0, 0, 0);
     }
 
     Truck(Node node, World world, double rotationX, double rotationY, double rotationZ) {
         super(node, world, rotationX, rotationY, rotationZ);
-    }
 
-    @Override
-    protected void onFinishedPath() {
-        // Deliver some stellages?
+        deliveredStellages = new ArrayList<>();
     }
 
     @Override
@@ -32,6 +37,20 @@ class Truck extends MovingObject3D implements Updatable {
 
         return true;
     }
+
+    @Override
+    protected void onFinishedPath() {
+        // Deliver some deliveredStellages?
+    }
+
+    /**
+     * Deliver a stellage to this truck
+     * @param stellage The stellage to add
+     */
+    public void addStellage(Stellage stellage) {
+        deliveredStellages.add(stellage);
+    }
+
 
 
 }

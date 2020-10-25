@@ -65,7 +65,7 @@ public class SimulationController extends Controller {
          * keer alle objecten krijgt toegestuurd, ook als deze objecten niet updaten. Zo voorkom je
          * dat de view alleen objecten ziet die worden geupdate (bijvoorbeeld bewegen).
          */
-        for (Object3D object : this.getModel().getWorldObjectsAsList()) {
+        for (Object3D object : this.getModel().getWorldObjectsAsProxyList()) {
             view.update(Model.UPDATE_COMMAND, object);
         }
     }

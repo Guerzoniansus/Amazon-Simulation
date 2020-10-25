@@ -21,7 +21,15 @@ public class World implements Model {
      */
     private List<Object3D> worldObjects;
 
-    private Graph graph;
+    private final Graph graph;
+
+    /**
+     * We don't want every class to have direct access to worldObjects.
+     * However, important classes (such as Warehouse) can access it through a WorldEditor if needed.
+     */
+    private final WorldEditor worldEditor;
+
+    private Warehouse warehouse;
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
@@ -34,11 +42,15 @@ public class World implements Model {
      * Deze methode moet uitgebreid worden zodat alle objecten van de 3D wereld hier worden gemaakt.
      */
     public World() {
+        worldEditor = new WorldEditor();
+
         SceneBuilder sceneBuilder = new AmazonSceneBuilder();
         sceneBuilder.buildScene();
 
         worldObjects = sceneBuilder.getObjects();
         graph = sceneBuilder.getGraph();
+
+        warehouse = new Warehouse(this, worldEditor);
     }
 
     /*
@@ -53,6 +65,12 @@ public class World implements Model {
     @Override
     public void update() {
         for (Object3D object : this.worldObjects) {
+
+            if (object.isReadyToDie()) {
+                deleteObject(object);
+                continue;
+            }
+
             if(object instanceof Updatable) {
                 if (((Updatable)object).update()) {
                     pcs.firePropertyChange(Model.UPDATE_COMMAND, null, new ProxyObject3D(object));
@@ -75,7 +93,7 @@ public class World implements Model {
      * kan er niks aangepast worden.
      */
     @Override
-    public List<Object3D> getWorldObjectsAsList() {
+    public List<Object3D> getWorldObjectsAsProxyList() {
         ArrayList<Object3D> returnList = new ArrayList<>();
 
         for(Object3D object : this.worldObjects) {
@@ -91,5 +109,57 @@ public class World implements Model {
      */
     public Graph getGraph() {
         return graph;
+    }
+
+    /**
+     * Delete an object from the world
+     * @param object The object to delete
+     */
+    private void deleteObject(Object3D object) {
+        if (worldObjects.contains(object)) {
+            worldObjects.remove(object);
+        }
+        // TODO: Delete command
+    }
+
+    /**
+     * Create a new object in the world
+     * @param object The object to create
+     */
+    private void createObject(Object3D object) {
+        worldObjects.add(object);
+        // TODO: Create command
+    }
+
+    /**
+     * Having an instance of this class allows for encapsulated editing of the world.
+     * Recommended to only give to important classes that need direct access to the world objects.
+     */
+    public class WorldEditor {
+
+        /**
+         * Returns the list of actual world objects. This list can be edited, so only important classes
+         * should have access to WorldEditor.
+         * @return A list of world objects.
+         */
+        public List<Object3D> getWorldObjects() {
+            return worldObjects;
+        }
+
+        /**
+         * Delete an object from the world
+         * @param object The object to delete
+         */
+        public void deleteObject(Object3D object) {
+            World.this.deleteObject(object);
+        }
+
+        /**
+         * Add an object to the world
+         * @param object The Object3D instance to add
+         */
+        public void createObject(Object3D object) {
+            World.this.createObject(object);
+        }
     }
 }

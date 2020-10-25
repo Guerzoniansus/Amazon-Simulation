@@ -3,13 +3,14 @@ package com.nhlstenden.amazonsimulatie.models;
 import java.util.UUID;
 
 
-abstract class Object3D {
+public abstract class Object3D {
 
     protected World world;
 
     protected UUID uuid;
 
     protected Node node;
+
     protected double x;
     protected double y;
     protected double z;
@@ -18,20 +19,24 @@ abstract class Object3D {
     protected double rotationY;
     protected double rotationZ;
 
+    protected boolean readyToDie;
+
+
     public Object3D(Node node, World world) {
         this(node, world, 0, 0, 0);
     }
 
     public Object3D(Node node, World world, double rotationX, double rotationY, double rotationZ) {
         this.world = world;
-        this.node = node;
         this.uuid = UUID.randomUUID();
+        this.node = node;
         this.x = node.getX();
         this.y = node.getY();
         this.z = node.getZ();
         this.rotationX = rotationX;
         this.rotationY = rotationY;
         this.rotationZ = rotationZ;
+        readyToDie = false;
     }
 
     /**
@@ -116,7 +121,14 @@ abstract class Object3D {
     /**
      * Delete this object from the world
      */
-    public void destroy() {
-        //TODO: Implement
+    public void die() {
+        readyToDie = true;
+    }
+
+    /**
+     * Checks if this object is about to be deleted from the world
+     */
+    public boolean isReadyToDie() {
+        return isReadyToDie();
     }
 }

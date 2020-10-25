@@ -48,7 +48,6 @@ public class Robot extends MovingObject3D implements Updatable {
         }
 
         else {
-            onFinishedPath();
             return false;
         }
     }

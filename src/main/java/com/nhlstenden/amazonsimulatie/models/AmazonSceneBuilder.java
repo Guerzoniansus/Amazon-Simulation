@@ -5,10 +5,13 @@ import java.util.List;
 
 class AmazonSceneBuilder implements SceneBuilder {
 
-    boolean doneBuilding;
+    private static final String GRAPH_TEXTFILE = "resources/graph.txt";
 
-    List<Object3D> objects;
-    Graph graph;
+    private boolean doneBuilding;
+
+    private List<Object3D> objects;
+    private Graph graph;
+
 
     public AmazonSceneBuilder() {
         doneBuilding = false;
@@ -17,6 +20,9 @@ class AmazonSceneBuilder implements SceneBuilder {
 
     @Override
     public void buildScene() {
+
+        GraphCreator graphCreator = new GraphCreator(GRAPH_TEXTFILE);
+        graph = graphCreator.getGraph();
 
         buildTruck();
         buildStellages();
@@ -27,7 +33,7 @@ class AmazonSceneBuilder implements SceneBuilder {
 
     /**
      * Helper shorthand method to add an object to the list of objects.
-     * So you can type addObject(object) instead of objects.add(object) everytime.
+     * So you can type createObject(object) instead of objects.add(object) everytime.
      * @param object The new object to add to the list of objects
      */
     private void addObject(Object3D object) {
@@ -50,9 +56,6 @@ class AmazonSceneBuilder implements SceneBuilder {
             throw new IllegalStateException("You FIRST need to call buildScene() before using this method");
         }
 
-
-
-        // graph = new Graph();
         return graph;
     }
 

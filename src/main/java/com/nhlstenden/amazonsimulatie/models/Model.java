@@ -24,5 +24,5 @@ public interface Model {
      */
     void update();
     void addObserver(PropertyChangeListener pcl);
-    List<Object3D> getWorldObjectsAsList();
+    List<Object3D> getWorldObjectsAsProxyList();
 }
