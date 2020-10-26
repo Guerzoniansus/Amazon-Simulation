@@ -10,7 +10,7 @@ import java.util.List;
  */
 class Truck extends MovingObject3D implements Updatable {
 
-    private static final int startNodeID = 1;
+    private static final int startNodeID = 35;
 
     private List<Stellage> deliveredStellages;
 

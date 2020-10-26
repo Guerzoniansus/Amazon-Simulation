@@ -4,10 +4,6 @@ import java.util.List;
 
 interface SceneBuilder {
 
-    /**
-     * Builds the scene. This method needs to be called FIRST, before retrieving the scene.
-     */
-    void buildScene();
 
     /**
      * Get a list of 3D objects that belong to the newly created scene
@@ -16,7 +12,9 @@ interface SceneBuilder {
     List<Object3D> getObjects();
 
     /**
-     * Returns a graph with nodes that belong to the newly created scene
+     * Returns a graph with nodes that belong to the newly created scene.
+     * This need to be run FIRST before getting the objects, as some objects might rely on the world
+     * already having a graph on instantiation.
      * @return
      */
     Graph getGraph();

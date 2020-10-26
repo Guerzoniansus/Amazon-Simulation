@@ -21,6 +21,10 @@ public abstract class Object3D {
 
     protected boolean readyToDie;
 
+    // This is just children can use this for some reason
+    protected Object3D() {
+
+    }
 
     public Object3D(Node node, World world) {
         this(node, world, 0, 0, 0);
@@ -129,6 +133,6 @@ public abstract class Object3D {
      * Checks if this object is about to be deleted from the world
      */
     public boolean isReadyToDie() {
-        return isReadyToDie();
+        return readyToDie;
     }
 }

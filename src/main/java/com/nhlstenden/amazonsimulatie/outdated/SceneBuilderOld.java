@@ -1,4 +1,4 @@
-package com.nhlstenden.amazonsimulatie.models;
+package com.nhlstenden.amazonsimulatie.outdated;
 
 import com.nhlstenden.amazonsimulatie.models.Object3D;
 

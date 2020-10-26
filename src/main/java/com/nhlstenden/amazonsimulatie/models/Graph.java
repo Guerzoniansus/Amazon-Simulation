@@ -1,7 +1,7 @@
 package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -9,11 +9,11 @@ class Graph {
 
     private final Map<Integer, Node> nodes;
 
-    private final int[][] connectionMatrix;
+    private final int[][] distanceMatrix;
 
-    public Graph(Map<Integer, Node> nodes, int[][] connectionMatrix) {
-        this.nodes = nodes;
-        this.connectionMatrix = connectionMatrix;
+    public Graph(Map<Integer, Node> nodes, int[][] distanceMatrix) {
+        this.nodes = Collections.unmodifiableMap(nodes);
+        this.distanceMatrix = distanceMatrix;
     }
 
     /**
@@ -30,11 +30,19 @@ class Graph {
     }
 
     /**
-     * Get a list of all the nodes in this graph
+     * Get an immutable list of all the nodes in this graph
      * @return A List with all nodes
      */
     public List<Node> getNodes() {
-        return new ArrayList(nodes.values());
+        return Collections.unmodifiableList(new ArrayList(nodes.values()));
+    }
+
+    /**
+     * Get the distance matrix of this graph
+     * @return A neighbour distance matrix
+     */
+    public int[][] getDistanceMatrix() {
+        return distanceMatrix;
     }
 
 

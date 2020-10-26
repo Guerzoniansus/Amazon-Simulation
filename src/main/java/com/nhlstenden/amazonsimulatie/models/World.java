@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 /*
  * Deze class is een versie van het model van de simulatie. In dit geval is het
@@ -44,11 +45,10 @@ public class World implements Model {
     public World() {
         worldEditor = new WorldEditor();
 
-        SceneBuilder sceneBuilder = new AmazonSceneBuilder();
-        sceneBuilder.buildScene();
+        SceneBuilder sceneBuilder = new AmazonSceneBuilder(this);
 
-        worldObjects = sceneBuilder.getObjects();
         graph = sceneBuilder.getGraph();
+        worldObjects = sceneBuilder.getObjects();
 
         warehouse = new Warehouse(this, worldEditor);
     }

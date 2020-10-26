@@ -15,19 +15,12 @@ public class Node {
     private final double y;
     private final double z;
 
-    /**
-     * A Map that stores the distance from this node to a specific target node
-     */
-    private final Map<Integer, Double> neighboursAndDistances;
-
-    public Node(int ID, NodeType type, Map<Integer, Double> neighboursAndDistancces,
-                double x, double y, double z) {
+    public Node(int ID, NodeType type, double x, double y, double z) {
         this.ID = ID;
         this.type = type;
         this.x = x;
         this.y = y;
         this.z = z;
-        this.neighboursAndDistances = neighboursAndDistancces;
     }
 
     /**
@@ -45,24 +38,6 @@ public class Node {
     public NodeType getType() {
         return type;
     }
-
-    /**
-     * Returns the distance from this node to the argument node
-     * @param node The Node of which to get the distance to
-     * @return The distance to the node
-     */
-    public double getDistanceToNeighbour(Node node) {
-        return neighboursAndDistances.get(node.getID());
-    }
-
-    /**
-     * Get a list of all neighbour IDs of this node
-     * @return A list with all the IDs of neighbours
-     */
-    public List<Integer> getNeighbours() {
-        return new ArrayList(neighboursAndDistances.keySet());
-    }
-
 
     /**
      * Gets the X position

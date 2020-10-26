@@ -5,30 +5,21 @@ import java.util.List;
 
 class AmazonSceneBuilder implements SceneBuilder {
 
-    private static final String GRAPH_TEXTFILE = "resources/graph.txt";
-
-    private boolean doneBuilding;
-
     private List<Object3D> objects;
-    private Graph graph;
+    private final World world;
 
 
-    public AmazonSceneBuilder() {
-        doneBuilding = false;
+    public AmazonSceneBuilder(World world) {
         objects = new ArrayList<>();
+        this.world = world;
     }
 
     @Override
-    public void buildScene() {
+    public Graph getGraph() {
+        GraphCreator graphCreator = new AmazonGraphCreator();
+        Graph graph = graphCreator.getGraph();
 
-        GraphCreator graphCreator = new GraphCreator(GRAPH_TEXTFILE);
-        graph = graphCreator.getGraph();
-
-        buildTruck();
-        buildStellages();
-        buildRobots();
-
-        doneBuilding = true;
+        return graph;
     }
 
     /**
@@ -43,27 +34,23 @@ class AmazonSceneBuilder implements SceneBuilder {
     @Override
     public List<Object3D> getObjects() {
 
-        if (doneBuilding == false) {
-            throw new IllegalStateException("You FIRST need to call buildScene() before using this method");
+        if (world.getGraph() == null) {
+            throw new IllegalStateException("The given world must FIRST contain a graph before calling this method!");
         }
+
+        buildTruck();
+        buildStellages();
+        buildRobots();
 
         return objects;
-    }
-
-    @Override
-    public Graph getGraph() {
-        if (doneBuilding == false) {
-            throw new IllegalStateException("You FIRST need to call buildScene() before using this method");
-        }
-
-        return graph;
     }
 
     /**
      * Build the truck
      */
     private void buildTruck() {
-
+        Truck truck = new Truck(world);
+        objects.add(truck);
     }
 
     /**
