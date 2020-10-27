@@ -62,14 +62,22 @@ public class Warehouse {
                      .collect(Collectors.toList());
     }
 
+    /**
+     * Add a new stellage to the world so it gets displayed in 3D
+     * @param stellage The new stellage to add
+     */
+    public void addNewStellage(Stellage stellage) {
+        worldEditor.createObject(stellage);
+    }
+
+    /**
+     * Replaces the truck with a new one
+     */
     public void replaceTruck() {
         //TODO: Implement
-
-        // worldEditor.deleteObject(truck);
-        // truck = new Truck(world);
-        // worldEditor.createObject(truck);
-        // truck.getStellages().forEach(x -> worldEditor.deleteObject(x))
-        // potentially more stuff
+        truck.die();
+        truck = new Truck(world);
+        worldEditor.createObject(truck);
     }
 
     /**

@@ -11,9 +11,16 @@ public class Graph {
 
     private final int[][] distanceMatrix;
 
+    private final Node loadingDock;
+
     public Graph(Map<Integer, Node> nodes, int[][] distanceMatrix) {
         this.nodes = Collections.unmodifiableMap(nodes);
         this.distanceMatrix = distanceMatrix;
+
+        this.loadingDock = nodes.values().stream()
+                                         .filter(x -> x.getType() == NodeType.LOADING_DOCK)
+                                         .findFirst()
+                                         .get();
     }
 
     /**
@@ -43,6 +50,14 @@ public class Graph {
      */
     public int[][] getDistanceMatrix() {
         return distanceMatrix;
+    }
+
+    /**
+     * Get the node where the loading dock is
+     * @return The loading dock Node
+     */
+    public Node getLoadingDockNode() {
+        return loadingDock;
     }
 
 

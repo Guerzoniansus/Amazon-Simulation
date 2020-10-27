@@ -18,9 +18,9 @@ public class RetrieveFromTruckTask extends RobotTask implements RobotListener {
 
     @Override
     public Queue<Node> getPath() {
-        Node truckNode = world.getWarehouse().getTruck().getNode();
+        Node loadingDockNode = world.getWarehouse().getTruck().getNode();
 
-        return calculatePath(robot.getNode(), truckNode);
+        return calculatePath(robot.getNode(), loadingDockNode);
     }
 
     @Override
@@ -28,7 +28,9 @@ public class RetrieveFromTruckTask extends RobotTask implements RobotListener {
         robot.removeRobotListener(this);
 
         Truck truck = world.getWarehouse().getTruck();
+
         Stellage stellage = world.getWarehouse().getTruck().takeStellage();
+        world.getWarehouse().addNewStellage(stellage);
 
         robot.setStellage(stellage);
         stellage.setParent(robot);

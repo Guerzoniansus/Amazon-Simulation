@@ -26,6 +26,7 @@ public class Stellage extends Object3D implements Updatable {
     public boolean update() {
 
         if (parent != null) {
+            node = parent.getNode();
             x = parent.getX();
             y = parent.getY();
             z = parent.getZ();

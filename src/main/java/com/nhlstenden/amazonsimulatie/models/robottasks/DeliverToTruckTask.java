@@ -1,9 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models.robottasks;
 
-import com.nhlstenden.amazonsimulatie.models.Node;
-import com.nhlstenden.amazonsimulatie.models.Robot;
-import com.nhlstenden.amazonsimulatie.models.RobotListener;
-import com.nhlstenden.amazonsimulatie.models.World;
+import com.nhlstenden.amazonsimulatie.models.*;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -18,15 +15,17 @@ public class DeliverToTruckTask extends RobotTask implements RobotListener {
 
     @Override
     public Queue<Node> getPath() {
-        LinkedList<Node> path = new LinkedList<>();
+        Node loadingDockNode = world.getGraph().getLoadingDockNode();
 
-        return path;
+        return calculatePath(robot.getNode(), loadingDockNode);
     }
 
     @Override
     public void onFinishedPath() {
         robot.removeRobotListener(this);
-        // truck.deliver() stuff
-        // robot.setTask(new IdleTask()) stuff
+        robot.getStellage().setStatus(StellageStatus.IN_TRUCK);
+        world.getWarehouse().getTruck().addStellage(robot.getStellage());
+        robot.removeStellage();
+        robot.executeTask(new IdleTask(world, robot));
     }
 }

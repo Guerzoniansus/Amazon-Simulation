@@ -16,7 +16,7 @@ import java.util.Queue;
 public class Truck extends MovingObject3D implements Updatable {
 
     private static final int STARTING_NODE_ID = 35;
-    private static final int ARRIVING_NODE_ID = 34;
+    private final Node ARRIVING_NODE;
 
     private enum Status {ARRIVING, PARKED, LEAVING}
     private Status status;
@@ -35,6 +35,7 @@ public class Truck extends MovingObject3D implements Updatable {
 
         gottenStellages = new ArrayList<>();
         status = Status.ARRIVING;
+        ARRIVING_NODE = world.getGraph().getLoadingDockNode();
 
         setPath(getStartingPath());
     }
@@ -47,15 +48,13 @@ public class Truck extends MovingObject3D implements Updatable {
     @Override
     protected void onFinishedPath() {
         if (status == Status.ARRIVING) {
-
-            scheduleTruckToWarehouseOrders();
-
+            // Get all idle robots to go to truck
+            world.getWarehouse().getIdleRobots().forEach(robot -> scheduleTruckToWarehouseOrder(robot));
             status = Status.PARKED;
         }
 
         else if (status == Status.LEAVING) {
-            // world.replaceTruck()
-            gottenStellages.forEach(obj -> obj.die());
+            world.getWarehouse().replaceTruck();
         }
     }
 
@@ -65,6 +64,7 @@ public class Truck extends MovingObject3D implements Updatable {
      */
     public void addStellage(Stellage stellage) {
         gottenStellages.add(stellage);
+        stellage.die();
 
         if (stellagesToGet == 0) {
             status = Status.LEAVING;
@@ -87,36 +87,28 @@ public class Truck extends MovingObject3D implements Updatable {
      */
     public void notifyNewRobotAvailable(Robot robot) {
         if (stellagesToDeliver > 0) {
-            scheduleTruckToWarehouseOrders();
+            scheduleTruckToWarehouseOrder(robot);
         }
 
         else if (stellagesToGet > 0) {
-            scheduleWarehouseToTruckOrders();
+            scheduleWarehouseToTruckOrder(robot);
         }
     }
 
     /**
      * Appoint new robot(s) to retrieve remaining stellages from Truck
      */
-    private void scheduleTruckToWarehouseOrders() {
-        world.getWarehouse().getIdleRobots().forEach(robot -> {
-            if (stellagesToDeliver > 0) {
-                stellagesToDeliver--;
-                robot.executeTask(new RetrieveFromTruckTask(world, robot));
-            }
-        });
+    private void scheduleTruckToWarehouseOrder(Robot robot) {
+        stellagesToDeliver--;
+        robot.executeTask(new RetrieveFromTruckTask(world, robot));
     }
 
     /**
      * Appoint new robot(s) to retrieve stellage from the Warehouse and deliver them to the truck
      */
-    private void scheduleWarehouseToTruckOrders() {
-        world.getWarehouse().getIdleRobots().forEach(robot -> {
-            if (stellagesToGet > 0) {
-                stellagesToGet--;
-                robot.executeTask(new RetrieveFromWarehouseTask(world, robot));
-            }
-        });
+    private void scheduleWarehouseToTruckOrder(Robot robot) {
+        stellagesToGet--;
+        robot.executeTask(new RetrieveFromWarehouseTask(world, robot));
     }
 
 
@@ -126,7 +118,7 @@ public class Truck extends MovingObject3D implements Updatable {
      */
     private Queue<Node> getStartingPath() {
         Queue<Node> startingPath = new LinkedList<>();
-        startingPath.add(world.getGraph().getNode(ARRIVING_NODE_ID));
+        startingPath.add(ARRIVING_NODE);
         return startingPath;
     }
 
