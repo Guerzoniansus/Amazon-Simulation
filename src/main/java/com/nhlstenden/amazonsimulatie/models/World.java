@@ -119,6 +119,9 @@ public class World implements Model {
         if (worldObjects.contains(object)) {
             worldObjects.remove(object);
         }
+        pcs.firePropertyChange(Model.DELETE_COMMAND, null, null);
+        object = null;
+        System.gc();
         // TODO: Delete command
     }
 
@@ -126,7 +129,7 @@ public class World implements Model {
      * Create a new object in the world
      * @param object The object to create
      */
-    private void createObject(Object3D object) {
+    private void createObject(Object3D object){
         worldObjects.add(object);
         // TODO: Create command
     }
