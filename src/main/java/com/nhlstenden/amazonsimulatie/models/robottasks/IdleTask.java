@@ -11,6 +11,8 @@ public class IdleTask extends RobotTask {
 
     public IdleTask(World world, Robot robot) {
         super(world, robot);
+
+        world.getWarehouse().notifyNewRobotIsIdle(robot);
     }
 
     @Override

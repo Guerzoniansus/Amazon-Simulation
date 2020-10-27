@@ -1,14 +1,16 @@
-package com.nhlstenden.amazonsimulatie.models;//package com.nhlstenden.amazonsimulatie.models;// A Java program for Dijkstra's single source shortest path algorithm.
+package com.nhlstenden.amazonsimulatie.utilities;//package com.nhlstenden.amazonsimulatie.models;// A Java program for Dijkstra's single source shortest path algorithm.
 // The program is for adjacency matrix representation of the graph 
 // https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
-import java.util.*; 
+import com.nhlstenden.amazonsimulatie.models.Node;
+
+import java.util.*;
 import java.lang.*; 
 import java.io.*; 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-class ShortestPathCalculator {
+public class ShortestPathCalculator {
     // A utility function to find the vertex with minimum distance value,
     // from the set of vertices not yet included in shortest path tree
 
@@ -19,14 +21,14 @@ class ShortestPathCalculator {
     /**
      * Creates a Queue with the shortest path
      * @param matrix Is used to get the neighbors and a array with the shortest distance to all nodes from the scource
-     * @param startingNodeID The ID of the node where the path begins
-     * @param endNodeID The ID of the final node where the path needs to end
-     * @return An Queue with the shortest path form scource to end
+     * @param startingNode The node where the path begins
+     * @param endNode The final node where the path needs to end
+     * @return An Queue of Node IDs with the shortest path from the startingNode to endNode
      */
-    public static Queue<Integer> calculateShortestPath(int matrix[][], int startingNodeID, int endNodeID)
+    public static Queue<Integer> calculateShortestPath(int matrix[][], Node startingNode, Node endNode)
     {
-        startingNodeID = startingNodeID - 1;
-        endNodeID = endNodeID - 1;
+        int startingNodeID = startingNode.getID() - 1;
+        int endNodeID = endNode.getID() - 1;
 
         int [] dijkstra = dijkstra(matrix, startingNodeID);
         int[] path = {endNodeID};

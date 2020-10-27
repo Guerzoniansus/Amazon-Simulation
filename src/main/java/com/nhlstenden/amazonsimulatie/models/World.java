@@ -21,8 +21,8 @@ public class World implements Model {
      * een lijst van Object3D onderdelen. Deze kunnen in principe alles zijn. (Robots, vrachrtwagens, etc)
      */
     private List<Object3D> worldObjects;
-
     private final Graph graph;
+    private Warehouse warehouse;
 
     /**
      * We don't want every class to have direct access to worldObjects.
@@ -30,7 +30,6 @@ public class World implements Model {
      */
     private final WorldEditor worldEditor;
 
-    private Warehouse warehouse;
 
     /*
      * Dit onderdeel is nodig om veranderingen in het model te kunnen doorgeven aan de controller.
@@ -109,6 +108,14 @@ public class World implements Model {
      */
     public Graph getGraph() {
         return graph;
+    }
+
+    /**
+     * Get this world's Warehouse
+     * @return The warehouse
+     */
+    public Warehouse getWarehouse() {
+        return warehouse;
     }
 
     /**

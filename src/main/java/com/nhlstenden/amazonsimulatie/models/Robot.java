@@ -73,13 +73,13 @@ public class Robot extends MovingObject3D implements Updatable {
     /**
      * Makes the robot execute their task by determining their path
      */
-    public void executeTask() {
-        setPath(task.getPath());
+    public void executeTask(RobotTask newTask) {
+        setPath(newTask.getPath());
     }
 
     /**
      * Returns the name of the current RobotTask task assigned to this robot
-     * @return This robot's RobotTask instance's Class name
+     * @return This robot's RobotTask instance's simple Class name
      */
     public String getTaskName() {
         return task.getClass().getSimpleName();

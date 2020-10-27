@@ -1,6 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-class Stellage extends Object3D implements Updatable {
+public class Stellage extends Object3D implements Updatable {
 
     private Object3D parent;
     private Node storageLocation;
