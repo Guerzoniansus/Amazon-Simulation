@@ -35,7 +35,32 @@ abstract class MovingObject3D extends Object3D {
         ===== Movemement logic =====
          */
 
-        // Code comes here
+        if(currentDestination.getX() < x)
+        {
+            x = x - speed;
+            rotationX = 0;
+        }
+        else if(currentDestination.getX() > x)
+        {
+            x = x + speed;
+            rotationX = 180;
+        }
+        else if(currentDestination.getZ() < z)
+        {
+            z = z - speed;
+            rotationX = 90;
+        }
+        else if(currentDestination.getZ() > z)
+        {
+            z = z + speed;
+            rotationX = 270;
+            //TODO: proper rotatiosn and this
+
+            if (z > currentDestination.getX()) {
+                z = currentDestination.getX();
+                this.node = currentDestination;
+            }
+        }
 
         /*
         ===== Check if reached destination =====
