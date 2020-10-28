@@ -1,8 +1,12 @@
-package com.nhlstenden.amazonsimulatie.models;
+package com.nhlstenden.amazonsimulatie.outdated;
+
+import com.nhlstenden.amazonsimulatie.models.Node;
+import com.nhlstenden.amazonsimulatie.models.Object3D;
+import com.nhlstenden.amazonsimulatie.models.World;
 
 import java.util.UUID;
 
-class TestCube extends Object3D implements Updatable {
+class TestCube extends Object3D {
 
     private enum Direction {NORTH, SOUTH, EAST, WEST}
 
@@ -21,7 +25,7 @@ class TestCube extends Object3D implements Updatable {
         this.direction = Direction.NORTH;
     }
 
-    @Override
+
     public boolean update() {
 
         if (direction == Direction.NORTH) {

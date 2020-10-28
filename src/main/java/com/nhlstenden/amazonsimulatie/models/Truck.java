@@ -48,6 +48,8 @@ public class Truck extends MovingObject3D implements Updatable {
     @Override
     protected void onFinishedPath() {
         if (status == Status.ARRIVING) {
+            rotationX += 180; // Turn around so the back faces the warehouse
+
             // Get all idle robots to go to truck
             world.getWarehouse().getIdleRobots().forEach(robot -> scheduleTruckToWarehouseOrder(robot));
             status = Status.PARKED;

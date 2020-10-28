@@ -2,6 +2,7 @@ package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Vector;
 
 abstract class MovingObject3D extends Object3D {
 
@@ -22,7 +23,8 @@ abstract class MovingObject3D extends Object3D {
     }
 
     /**
-     * Attempt movement and check if any movement was made. Updates current node when arrived at a new node.
+     * Attempt movement along this object's set path and check if any movement was made.
+     * Updates current node when arrived at a new node.
      * @return True if moved, false if no movement (there is no path left).
      */
     protected boolean move() {
@@ -35,32 +37,45 @@ abstract class MovingObject3D extends Object3D {
         ===== Movemement logic =====
          */
 
-        if(currentDestination.getX() < x)
-        {
+
+        if (currentDestination.getX() < x) {
             x = x - speed;
-            rotationX = 0;
+
+            if (x < currentDestination.getX()) {
+                x = currentDestination.getX();
+                this.node = currentDestination;
+            }
         }
-        else if(currentDestination.getX() > x)
-        {
+
+        else if (currentDestination.getX() > x) {
             x = x + speed;
-            rotationX = 180;
+
+            if (x > currentDestination.getX()) {
+                x = currentDestination.getX();
+                this.node = currentDestination;
+            }
         }
-        else if(currentDestination.getZ() < z)
-        {
+
+        if (currentDestination.getZ() < z) {
             z = z - speed;
-            rotationX = 90;
+
+            if (z < currentDestination.getZ()) {
+                z = currentDestination.getZ();
+                this.node = currentDestination;
+            }
         }
-        else if(currentDestination.getZ() > z)
-        {
+
+        else if (currentDestination.getZ() > z) {
             z = z + speed;
-            rotationX = 270;
-            //TODO: proper rotatiosn and this
 
             if (z > currentDestination.getX()) {
                 z = currentDestination.getX();
                 this.node = currentDestination;
             }
         }
+
+        rotationX = determineRotation(node, currentDestination);
+
 
         /*
         ===== Check if reached destination =====
@@ -95,5 +110,16 @@ abstract class MovingObject3D extends Object3D {
      */
     protected void setPath(Queue<Node> path) {
         this.path = path;
+    }
+
+    /**
+     * Determine the direction rotation between two points
+     * @param currentNode The starting node
+     * @param targetNode The target node
+     * @return The direction in degrees
+     */
+    private static double determineRotation(Node currentNode, Node targetNode) {
+        return Math.toDegrees(Math.atan2(targetNode.getY() - currentNode.getY(),
+                currentNode.getX() - targetNode.getX()));
     }
 }
