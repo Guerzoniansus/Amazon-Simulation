@@ -33,7 +33,7 @@ public class Graph {
             return nodes.get(ID);
         }
 
-        else return null;
+        else throw new NullPointerException("This node does not exist");
     }
 
     /**

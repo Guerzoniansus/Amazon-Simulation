@@ -12,7 +12,7 @@ const socket = new WebSocket("ws://" + window.location.hostname + ":" + window.l
 let camera, scene, renderer;
 let cameraControls;
 
-let worldObjects = {};
+
 
 // Loading 3D models costs time, checking simple strings doesn't.
 // This list is used to check if an object "exists", even when it's not loaded onto the scene yet
@@ -46,6 +46,31 @@ function init() {
     addSkybox();
     addGround();
     addLights();
+
+    /*
+     * Hier wordt de socketcommunicatie geregeld. Er wordt een nieuwe websocket aangemaakt voor het webadres dat we in
+     * de server geconfigureerd hebben als connectiepunt (/connectToSimulation). Op de socket wordt een .onmessage
+     * functie geregistreerd waarmee binnenkomende berichten worden afgehandeld.
+     */
+
+    socket.onmessage = function (event) {
+        // Hier wordt het commando dat vanuit de server wordt gegeven uit elkaar gehaald
+        let command = parseCommand(event.data);
+        console.log(command);
+
+        switch (command.command) {
+            case "object_update":
+                executeUpdateCommand(command);
+                break;
+            case "object_create":
+                executeCreateCommand(command);
+                break;
+            case "object_delete":
+                executeDeleteCommand(command);
+                break;
+        }
+    };
+
 }
 
 function addSkybox() {
@@ -128,9 +153,17 @@ function animate() {
  * Add an object to the scene and to the worldObjects array
  * @param object - The 3D object (a Three JS Mesh)
  * @param {string} UUID - The UUID of the object as it's stored on the server
+ * @param {string} args - The object arguments such as coordinates and rotation
  */
-function addObject(object, UUID) {
-    object.castShadow = true;
+function addObject(object, UUID, args) {
+    //object.castShadow = true;
+
+    object.position.x = parseInt(args.x);
+    object.position.y = parseInt(args.y);
+    object.position.z = parseInt(args.z);
+    object.rotation.x = parseInt(args.rotationX);
+    object.rotation.y = parseInt(args.rotationY);
+    object.rotation.z = parseInt(args.rotationZ);
 
     let group = new THREE.Group();
     group.add(object);
@@ -148,35 +181,13 @@ function parseCommand(input = "") {
     return JSON.parse(input);
 }
 
-/*
- * Hier wordt de socketcommunicatie geregeld. Er wordt een nieuwe websocket aangemaakt voor het webadres dat we in
- * de server geconfigureerd hebben als connectiepunt (/connectToSimulation). Op de socket wordt een .onmessage
- * functie geregistreerd waarmee binnenkomende berichten worden afgehandeld.
- */
 
-socket.onmessage = function (event) {
-    // Hier wordt het commando dat vanuit de server wordt gegeven uit elkaar gehaald
-    let command = parseCommand(event.data);
 
-    // Wanneer het commando is "object_update", dan wordt deze code uitgevoerd. Bekijk ook de servercode om dit goed te begrijpen.
-    if (command.command == "object_update") {
+function executeUpdateCommand(command) {
 
-        // Wanneer het object dat moet worden geupdate nog niet bestaat (komt niet voor in de lijst met worldObjects op de client),
-        // dan wordt het 3D model eerst aangemaakt in de 3D wereld.
-        if (Object.keys(worldObjects).indexOf(command.parameters.uuid) < 0
-        && usedUUIDs.includes(command.parameters.uuid) == false) {
-
-            usedUUIDs.push(command.parameters.uuid);
-            createObject(command.parameters.type, addObject, command.parameters.uuid);
-
-        }
-
-        /*
-         * Deze code wordt elke update uitgevoerd. Het update alle positiegegevens van het 3D object.
-         */
-
+    // First check if object exists
+    if (Object.keys(worldObjects).indexOf(command.parameters.uuid) >= 0) {
         let object = worldObjects[command.parameters.uuid];
-
         object.position.x = command.parameters.x;
         object.position.y = command.parameters.y;
         object.position.z = command.parameters.z;
@@ -185,4 +196,22 @@ socket.onmessage = function (event) {
         object.rotation.y = command.parameters.rotationY;
         object.rotation.z = command.parameters.rotationZ;
     }
-};
+
+}
+
+function executeCreateCommand(command) {
+    if (Object.keys(worldObjects).indexOf(command.parameters.uuid) < 0
+        && usedUUIDs.includes(command.parameters.uuid) == false) {
+
+        usedUUIDs.push(command.parameters.uuid);
+        createObject(command.parameters.type, addObject, command.parameters.uuid, command.parameters);
+    }
+}
+
+function executeDeleteCommand(command) {
+    let object = worldObjects[command.parameters.uuid];
+    scene.remove(object);
+    object.geometry.dispose();
+    object.material.dispose();
+    object = undefined;
+}

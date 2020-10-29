@@ -33,6 +33,8 @@ public class Truck extends MovingObject3D implements Updatable {
     Truck(Node node, World world, double rotationX, double rotationY, double rotationZ) {
         super(node, world, rotationX, rotationY, rotationZ);
 
+        this.speed = 0.1;
+
         gottenStellages = new ArrayList<>();
         status = Status.ARRIVING;
         ARRIVING_NODE = world.getGraph().getLoadingDockNode();
@@ -42,13 +44,20 @@ public class Truck extends MovingObject3D implements Updatable {
 
     @Override
     public boolean update() {
+        if (status == Status.ARRIVING) {
+            if (move() == false) {
+                rotationY += 180;
+            }
+            return true;
+        }
+
         return move();
     }
 
     @Override
     protected void onFinishedPath() {
         if (status == Status.ARRIVING) {
-            rotationX += 180; // Turn around so the back faces the warehouse
+            //rotationY += 180; // Turn around so the back faces the warehouse
 
             // Get all idle robots to go to truck
             world.getWarehouse().getIdleRobots().forEach(robot -> scheduleTruckToWarehouseOrder(robot));

@@ -1,14 +1,23 @@
-function createStellage(addFunction, uuid){
+function createStellage(addFunction, uuid, args){
 
-let loader = new THREE.GLTFLoader();
+    const geometry = new THREE.BoxGeometry(0.9, 3, 0.9);
+    const material = new THREE.MeshBasicMaterial({color: 0x44aa88});
+    const stellage = new THREE.Mesh(geometry, material);
 
-loader.load('textures/shelving unit/model.gltf', function(gltf){
-    let stellage = gltf.scene;
+    addFunction(stellage, uuid, args);
+
+    /*
+    let loader = new THREE.GLTFLoader();
+
+    loader.load('textures/shelving unit/model.gltf', function(gltf){
+        let stellage = gltf.scene;
 
 
+          addFunction(stellage, uuid, args);
+        });
 
-      addFunction(stellage, uuid);
-    });
+    */
+
 }
 
 

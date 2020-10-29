@@ -26,30 +26,25 @@ public class Robot extends MovingObject3D implements Updatable {
     public Robot(Node node, World world, double rotationX, double rotationY, double rotationZ) {
         super(node, world, rotationX, rotationY, rotationZ);
 
-        this.speed = 0.2;
+        this.speed = 0.1;
 
         this.stellage = null;
-        this.task = new IdleTask(world, this);
         this.listeners = new ArrayList<>();
+        this.task = new IdleTask(world, this);
     }
 
 
     @Override
     protected void onFinishedPath() {
-        listeners.forEach(listener -> listener.onFinishedPath());
+        for (RobotListener listener : new ArrayList<>(listeners)) {
+            listener.onFinishedPath();
+        }
     }
 
 
     @Override
     public boolean update() {
-
-        if (move()) {
-            return true;
-        }
-
-        else {
-            return false;
-        }
+        return move();
     }
 
     /**
@@ -74,6 +69,7 @@ public class Robot extends MovingObject3D implements Updatable {
      * Makes the robot execute their task by determining their path
      */
     public void executeTask(RobotTask newTask) {
+        this.task = newTask;
         setPath(newTask.getPath());
     }
 

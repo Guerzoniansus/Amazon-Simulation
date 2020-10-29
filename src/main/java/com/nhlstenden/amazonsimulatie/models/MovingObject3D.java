@@ -43,7 +43,6 @@ abstract class MovingObject3D extends Object3D {
 
             if (x < currentDestination.getX()) {
                 x = currentDestination.getX();
-                this.node = currentDestination;
             }
         }
 
@@ -52,7 +51,6 @@ abstract class MovingObject3D extends Object3D {
 
             if (x > currentDestination.getX()) {
                 x = currentDestination.getX();
-                this.node = currentDestination;
             }
         }
 
@@ -61,7 +59,6 @@ abstract class MovingObject3D extends Object3D {
 
             if (z < currentDestination.getZ()) {
                 z = currentDestination.getZ();
-                this.node = currentDestination;
             }
         }
 
@@ -70,12 +67,10 @@ abstract class MovingObject3D extends Object3D {
 
             if (z > currentDestination.getX()) {
                 z = currentDestination.getX();
-                this.node = currentDestination;
             }
         }
 
-        rotationX = determineRotation(node, currentDestination);
-
+        //TODO: rotationY = determineRotation(node, currentDestination);
 
         /*
         ===== Check if reached destination =====
@@ -110,6 +105,11 @@ abstract class MovingObject3D extends Object3D {
      */
     protected void setPath(Queue<Node> path) {
         this.path = path;
+        this.currentDestination = path.poll();
+
+        if (currentDestination == null) {
+            onFinishedPath();
+        }
     }
 
     /**
@@ -119,7 +119,7 @@ abstract class MovingObject3D extends Object3D {
      * @return The direction in degrees
      */
     private static double determineRotation(Node currentNode, Node targetNode) {
-        return Math.toDegrees(Math.atan2(targetNode.getY() - currentNode.getY(),
+        return Math.toDegrees(Math.atan2(targetNode.getZ() - currentNode.getZ(),
                 currentNode.getX() - targetNode.getX()));
     }
 }

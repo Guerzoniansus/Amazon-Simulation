@@ -63,7 +63,8 @@ public class World implements Model {
      */
     @Override
     public void update() {
-        for (Object3D object : this.worldObjects) {
+        // A new proxy list is made to prevent concurrent modification exception
+        for (Object3D object : new ArrayList<Object3D>(this.worldObjects)) {
 
             if (object.isReadyToDie()) {
                 deleteObject(object);
@@ -126,7 +127,8 @@ public class World implements Model {
         if (worldObjects.contains(object)) {
             worldObjects.remove(object);
         }
-        // TODO: Delete command
+
+        pcs.firePropertyChange(Model.DELETE_COMMAND, null, new ProxyObject3D(object));
     }
 
     /**
@@ -135,7 +137,7 @@ public class World implements Model {
      */
     private void createObject(Object3D object) {
         worldObjects.add(object);
-        // TODO: Create command
+        pcs.firePropertyChange(Model.CREATE_COMMAND, null, new ProxyObject3D(object));
     }
 
     /**

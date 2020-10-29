@@ -35,7 +35,7 @@ public abstract class RobotTask {
         return ShortestPathCalculator.calculateShortestPath
                                         (world.getGraph().getDistanceMatrix(), startingNode, endNode)
                                         .stream()
-                                        .map(ID -> world.getGraph().getNode(ID))
+                                        .map(ID -> (Node) world.getGraph().getNode(ID))
                                         .collect(Collectors.toCollection(LinkedList::new));
     }
 

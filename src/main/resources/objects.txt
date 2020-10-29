@@ -1,0 +1,8 @@
+Robot: 1
+Robot: 30
+Stellage: 6
+Stellage: 13
+Stellage: 16
+Stellage: 23
+Stellage: 26
+Truck:
