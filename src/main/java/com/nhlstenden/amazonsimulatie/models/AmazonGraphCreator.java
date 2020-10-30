@@ -61,7 +61,6 @@ class AmazonGraphCreator implements GraphCreator {
 
     @Override
     public Graph getGraph() {
-
         Map<Integer, Node> nodes = loadNodes(TEXT_FILE);
         Graph graph = new Graph(nodes, DISTANCE_MATRIX);
 

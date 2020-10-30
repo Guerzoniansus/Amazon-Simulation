@@ -33,7 +33,8 @@ public class Truck extends MovingObject3D implements Updatable {
     Truck(Node node, World world, double rotationX, double rotationY, double rotationZ) {
         super(node, world, rotationX, rotationY, rotationZ);
 
-        this.speed = 0.1;
+        this.speed = 0.2;
+        this.rotationY = 180;
 
         gottenStellages = new ArrayList<>();
         status = Status.ARRIVING;
@@ -44,11 +45,12 @@ public class Truck extends MovingObject3D implements Updatable {
 
     @Override
     public boolean update() {
-        if (status == Status.ARRIVING) {
-            if (move() == false) {
-                rotationY += 180;
+
+        if (status == Status.PARKED) {
+            if (rotationY == 180) {
+                rotationY = 0;
+                return true;
             }
-            return true;
         }
 
         return move();

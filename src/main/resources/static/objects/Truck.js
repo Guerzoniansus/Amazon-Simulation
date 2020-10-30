@@ -11,7 +11,7 @@ function createTruck(addFunction, args) {
         //    }
         //});
 
-        truck.scale.set(0.1, 0.1, 0.1);
+        truck.scale.set(0.08, 0.08, 0.08);
 
         addFunction(truck, args);
     });

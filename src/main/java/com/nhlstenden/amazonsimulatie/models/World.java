@@ -149,7 +149,7 @@ public class World implements Model {
         /**
          * Returns the list of actual world objects. This list can be edited, so only important classes
          * should have access to WorldEditor.
-         * @return A list of world objects.
+         * @return A list of world objects
          */
         public List<Object3D> getWorldObjects() {
             return worldObjects;

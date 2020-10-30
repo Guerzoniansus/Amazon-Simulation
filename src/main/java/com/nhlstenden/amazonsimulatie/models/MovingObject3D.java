@@ -119,7 +119,9 @@ abstract class MovingObject3D extends Object3D {
      * @return The direction in degrees
      */
     private static double determineRotation(Node currentNode, Node targetNode) {
-        return Math.toDegrees(Math.atan2(targetNode.getZ() - currentNode.getZ(),
+        double offsetDegrees = 90;
+
+        return Math.toDegrees(offsetDegrees + Math.atan2(targetNode.getZ() - currentNode.getZ(),
                 currentNode.getX() - targetNode.getX()));
     }
 }

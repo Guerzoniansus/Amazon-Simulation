@@ -12,6 +12,8 @@ const socket = new WebSocket("ws://" + window.location.hostname + ":" + window.l
 let camera, scene, renderer;
 let cameraControls;
 
+let worldObjects = {};
+
 
 // Loading 3D models costs time, checking simple strings doesn't.
 // This list is used to check if an object "exists", even when it's not loaded onto the scene yet
@@ -157,13 +159,12 @@ function animate() {
 function addObject(object, args) {
     object.castShadow = true;
 
-
     object.position.x = parseFloat(args.x);
     object.position.y = parseFloat(args.y);
     object.position.z = parseFloat(args.z);
-    object.rotation.x = parseFloat(args.rotationX);
-    object.rotation.y = parseFloat(args.rotationY);
-    object.rotation.z = parseFloat(args.rotationZ);
+    object.rotation.x = THREE.Math.degToRad(parseFloat(args.rotationX));
+    object.rotation.y = THREE.Math.degToRad(parseFloat(args.rotationY));
+    object.rotation.z = THREE.Math.degToRad(parseFloat(args.rotationZ));
 
     scene.add(object);
     worldObjects[args.uuid] = object;
@@ -192,9 +193,9 @@ function executeUpdateCommand(command) {
         object.position.y = command.parameters.y;
         object.position.z = command.parameters.z;
 
-        object.rotation.x = command.parameters.rotationX;
-        object.rotation.y = command.parameters.rotationY;
-        object.rotation.z = command.parameters.rotationZ;
+        object.rotation.x = THREE.Math.degToRad(parseFloat(command.parameters.rotationX));
+        object.rotation.y = THREE.Math.degToRad(parseFloat(command.parameters.rotationY));
+        object.rotation.z = THREE.Math.degToRad(parseFloat(command.parameters.rotationZ));
     }
 
 }
