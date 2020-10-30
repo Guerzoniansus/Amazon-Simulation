@@ -65,8 +65,8 @@ abstract class MovingObject3D extends Object3D {
         else if (currentDestination.getZ() > z) {
             z = z + speed;
 
-            if (z > currentDestination.getX()) {
-                z = currentDestination.getX();
+            if (z > currentDestination.getZ()) {
+                z = currentDestination.getZ();
             }
         }
 
