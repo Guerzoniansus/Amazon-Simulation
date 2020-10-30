@@ -109,7 +109,7 @@ class AmazonSceneBuilder implements SceneBuilder {
                 case "robot":
                     return new Robot(node, world);
                 case "stellage":
-                    return new Stellage(StellageStatus.IN_WAREHOUSE, node, world);
+                    return new Stellage(StellageStatus.IN_WAREHOUSE, node, node, world);
             }
 
         }
