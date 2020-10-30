@@ -157,6 +157,7 @@ function animate() {
 function addObject(object, args) {
     object.castShadow = true;
 
+
     object.position.x = parseFloat(args.x);
     object.position.y = parseFloat(args.y);
     object.position.z = parseFloat(args.z);
@@ -164,11 +165,8 @@ function addObject(object, args) {
     object.rotation.y = parseFloat(args.rotationY);
     object.rotation.z = parseFloat(args.rotationZ);
 
-    let group = new THREE.Group();
-    group.add(object);
-
-    scene.add(group);
-    worldObjects[args.uuid] = group;
+    scene.add(object);
+    worldObjects[args.uuid] = object;
 }
 
 /**
