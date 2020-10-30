@@ -1,4 +1,4 @@
-function createRobot(addFunction, uuid, args) {
+function createRobot(addFunction, args) {
     const geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
 
     const textureLoader = new THREE.TextureLoader();
@@ -15,7 +15,7 @@ function createRobot(addFunction, uuid, args) {
 
     let robot = new THREE.Mesh(geometry, cubeMaterials);
 
-    addFunction(robot, uuid, args);
+    addFunction(robot, args);
 }
 
 export {createRobot};

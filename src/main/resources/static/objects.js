@@ -26,19 +26,18 @@ export {createRobot}
  * Create a new object
  * @param {string} objectName - The name of the object as received from the server
  * @param {function} addFunction - The function an object needs to call on its own to add itself to the scene
- * @param {string} UUID - The UUID of the object
- * @param {string} args - The object arguments such as coordinates and rotation
+ * @param {string} args - The object arguments such as uuid, coordinates and rotation
  */
-function createObject(objectName, addFunction, UUID, args) {
+function createObject(objectName, addFunction, args) {
     switch (objectName) {
         case "robot":
-            createRobot(addFunction, UUID, args);
+            createRobot(addFunction, args);
             break;
         case "stellage":
-            createStellage(addFunction, UUID, args);
+            createStellage(addFunction, args);
             break;
         case "truck":
-            createTruck(addFunction, UUID, args);
+            createTruck(addFunction, args);
             break;
     }
 }

@@ -14,7 +14,7 @@ import com.nhlstenden.amazonsimulatie.views.View;
  */
 public class SimulationController extends Controller {
 
-    private static final int FRAMERATE = 1000 / 30; // 30 fps
+    private static final int FRAMERATE = 1000 / 10; // 30 fps
 
     public SimulationController(Model model) {
         super(model); //Met dit onderdeel roep je de constructor aan van de superclass (Controller)

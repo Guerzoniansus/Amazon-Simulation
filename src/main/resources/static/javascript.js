@@ -13,7 +13,6 @@ let camera, scene, renderer;
 let cameraControls;
 
 
-
 // Loading 3D models costs time, checking simple strings doesn't.
 // This list is used to check if an object "exists", even when it's not loaded onto the scene yet
 // to prevent multiple objects being made with the same UUID.
@@ -153,23 +152,23 @@ function animate() {
  * Add an object to the scene and to the worldObjects array
  * @param object - The 3D object (a Three JS Mesh)
  * @param {string} UUID - The UUID of the object as it's stored on the server
- * @param {string} args - The object arguments such as coordinates and rotation
+ * @param {string} args - The object arguments such as UUID, coordinates and rotation
  */
-function addObject(object, UUID, args) {
-    //object.castShadow = true;
+function addObject(object, args) {
+    object.castShadow = true;
 
-    object.position.x = parseInt(args.x);
-    object.position.y = parseInt(args.y);
-    object.position.z = parseInt(args.z);
-    object.rotation.x = parseInt(args.rotationX);
-    object.rotation.y = parseInt(args.rotationY);
-    object.rotation.z = parseInt(args.rotationZ);
+    object.position.x = parseFloat(args.x);
+    object.position.y = parseFloat(args.y);
+    object.position.z = parseFloat(args.z);
+    object.rotation.x = parseFloat(args.rotationX);
+    object.rotation.y = parseFloat(args.rotationY);
+    object.rotation.z = parseFloat(args.rotationZ);
 
     let group = new THREE.Group();
     group.add(object);
 
     scene.add(group);
-    worldObjects[UUID] = group;
+    worldObjects[args.uuid] = group;
 }
 
 /**
@@ -182,7 +181,10 @@ function parseCommand(input = "") {
 }
 
 
-
+/**
+ * Execute the object update command
+ * @param {string} command - The command sent by the server
+ */
 function executeUpdateCommand(command) {
 
     // First check if object exists
@@ -199,15 +201,23 @@ function executeUpdateCommand(command) {
 
 }
 
+/**
+ * Execute the object create command by creating a new 3D object
+ * @param {string} command - The command sent by the server
+ */
 function executeCreateCommand(command) {
     if (Object.keys(worldObjects).indexOf(command.parameters.uuid) < 0
         && usedUUIDs.includes(command.parameters.uuid) == false) {
 
         usedUUIDs.push(command.parameters.uuid);
-        createObject(command.parameters.type, addObject, command.parameters.uuid, command.parameters);
+        createObject(command.parameters.type, addObject, command.parameters);
     }
 }
 
+/**
+ * Execute the delete update command by deleting an object
+ * @param {string} command - The command sent by the server
+ */
 function executeDeleteCommand(command) {
     let object = worldObjects[command.parameters.uuid];
     scene.remove(object);

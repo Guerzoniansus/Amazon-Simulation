@@ -1,4 +1,4 @@
-function createTruck(addFunction, uuid, args) {
+function createTruck(addFunction, args) {
 
     let loader = new THREE.GLTFLoader();
 
@@ -13,7 +13,7 @@ function createTruck(addFunction, uuid, args) {
 
         truck.scale.set(0.1, 0.1, 0.1);
 
-        addFunction(truck, uuid, args);
+        addFunction(truck, args);
     });
 
 }

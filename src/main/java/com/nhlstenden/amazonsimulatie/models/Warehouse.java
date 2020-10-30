@@ -74,7 +74,6 @@ public class Warehouse {
      * Replaces the truck with a new one
      */
     public void replaceTruck() {
-        //TODO: Implement
         truck.die();
         truck = new Truck(world);
         worldEditor.createObject(truck);
