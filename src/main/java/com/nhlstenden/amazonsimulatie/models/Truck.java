@@ -97,12 +97,14 @@ public class Truck extends MovingObject3D implements Updatable {
      * @param robot The robot that is now idle and available
      */
     public void notifyNewRobotAvailable(Robot robot) {
-        if (stellagesToDeliver > 0) {
-            scheduleTruckToWarehouseOrder(robot);
-        }
+        if (status == Status.PARKED) {
+            if (stellagesToDeliver > 0) {
+                scheduleTruckToWarehouseOrder(robot);
+            }
 
-        else if (stellagesToGet > 0) {
-            scheduleWarehouseToTruckOrder(robot);
+            else if (stellagesToGet > 0) {
+                scheduleWarehouseToTruckOrder(robot);
+            }
         }
     }
 

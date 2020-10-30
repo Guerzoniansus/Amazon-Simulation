@@ -13,9 +13,7 @@ import java.util.Queue;
  */
 public class Robot extends MovingObject3D implements Updatable {
 
-    private RobotTask task;
-
-    private List<RobotListener> listeners;
+    private RobotListener task;
 
     private Stellage stellage;
 
@@ -29,16 +27,13 @@ public class Robot extends MovingObject3D implements Updatable {
         this.speed = 0.1;
 
         this.stellage = null;
-        this.listeners = new ArrayList<>();
         this.task = new IdleTask(world, this);
     }
 
 
     @Override
     protected void onFinishedPath() {
-        for (RobotListener listener : new ArrayList<>(listeners)) {
-            listener.onFinishedPath();
-        }
+        task.onFinishedPath();
     }
 
 
@@ -52,7 +47,9 @@ public class Robot extends MovingObject3D implements Updatable {
      * @param listener The listener to add
      */
     public void addRobotListener(RobotListener listener) {
-        this.listeners.add(listener);
+        if (!(this.task instanceof IdleTask) && this.task != null)
+            throw new IllegalStateException(String.format("bro im already doing %s", this.task));
+        this.task = listener;
     }
 
     /**
@@ -60,16 +57,13 @@ public class Robot extends MovingObject3D implements Updatable {
      * @param listener
      */
     public void removeRobotListener(RobotListener listener) {
-        if (listeners.contains(listener)) {
-            listeners.remove(listener);
-        }
+        this.task = null;
     }
 
     /**
      * Makes the robot execute their task by determining their path
      */
     public void executeTask(RobotTask newTask) {
-        this.task = newTask;
         setPath(newTask.getPath());
     }
 

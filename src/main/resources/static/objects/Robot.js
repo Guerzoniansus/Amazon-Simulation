@@ -1,21 +1,14 @@
 function createRobot(addFunction, args) {
-    const geometry = new THREE.BoxGeometry(0.9, 0.3, 0.9);
 
-    const textureLoader = new THREE.TextureLoader();
+    let loader = new THREE.GLTFLoader();
 
-    const cubeMaterials = [
-        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_side.png"), side: THREE.DoubleSide }), //LEFT
-        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_side.png"), side: THREE.DoubleSide }), //RIGHT
-        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_top.png"), side: THREE.DoubleSide }), //TOP
-        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_bottom.png"), side: THREE.DoubleSide }), //BOTTOM
-        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_front.png"), side: THREE.DoubleSide }), //FRONT
-        new THREE.MeshPhongMaterial({ map: textureLoader.load("textures/robot_front.png"), side: THREE.DoubleSide }), //BACK
-    ];
+    loader.load('textures/robot/Robot.glb', function(gltf){
+        let robot = gltf.scene;
+        robot.scale.set(0.1, 0.1, 0.1);
 
 
-    let robot = new THREE.Mesh(geometry, cubeMaterials);
-
-    addFunction(robot, args);
+        addFunction(robot, args);
+    });
 }
 
 export {createRobot};
