@@ -34,16 +34,20 @@ public class DefaultWebSocketView implements View {
     public void update(String event, Object3D data) {
         try {
             if(this.sesion.isOpen()) {
-                this.sesion.sendMessage(new TextMessage("{"
-                + surroundString("command") + ": " + surroundString(event) + ","
-                + surroundString("parameters") + ": " + jsonifyObject3D(data)
-              + "}"));
+                synchronized (this.sesion) {
+                    this.sesion.sendMessage(new TextMessage("{"
+                            + surroundString("command") + ": " + surroundString(event) + ","
+                            + surroundString("parameters") + ": " + jsonifyObject3D(data)
+                            + "}"));
+                }
             }
             else {
                 this.onClose.execute();
             }
             
         } catch (IOException e) {
+            this.onClose.execute();
+        } catch (IllegalStateException e) {
             this.onClose.execute();
         }
     }

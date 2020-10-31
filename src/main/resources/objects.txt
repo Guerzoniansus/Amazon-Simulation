@@ -1,6 +1,8 @@
 Robot: 1
 Robot: 30
 Stellage: 6
+Stellage: 8
+Stellage: 11
 Stellage: 13
 Stellage: 16
 Stellage: 23

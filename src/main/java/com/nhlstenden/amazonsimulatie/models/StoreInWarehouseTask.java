@@ -1,14 +1,11 @@
-package com.nhlstenden.amazonsimulatie.models.robottasks;
-
-import com.nhlstenden.amazonsimulatie.models.*;
+package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.Queue;
 
-public class StoreInWarehouseTask extends RobotTask {
+class StoreInWarehouseTask extends RobotTask {
 
-    public StoreInWarehouseTask(World world, Robot robot) {
+    StoreInWarehouseTask(World world, Robot robot) {
         super(world, robot);
-        //robot.setRobotListener(this);
 
         Node storagelocation = world.getWarehouse().getAvailableStorageLocations().get(0);
         robot.getStellage().setStorageLocation(storagelocation);
@@ -23,8 +20,6 @@ public class StoreInWarehouseTask extends RobotTask {
 
     @Override
     public void onFinishedPath() {
-        //robot.removeRobotListener(this);
-
         robot.getStellage().setStatus(StellageStatus.IN_WAREHOUSE);
         robot.getStellage().removeParent();
         robot.removeStellage();

@@ -1,16 +1,13 @@
-package com.nhlstenden.amazonsimulatie.utilities;//package com.nhlstenden.amazonsimulatie.models;// A Java program for Dijkstra's single source shortest path algorithm.
+package com.nhlstenden.amazonsimulatie.models;//package com.nhlstenden.amazonsimulatie.models;// A Java program for Dijkstra's single source shortest path algorithm.
 // The program is for adjacency matrix representation of the graph 
 // https://www.geeksforgeeks.org/dijkstras-shortest-path-algorithm-greedy-algo-7/
-import com.nhlstenden.amazonsimulatie.models.Node;
 
 import java.util.*;
 import java.lang.*; 
-import java.io.*; 
 import java.util.List;
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
-public class ShortestPathCalculator {
+class ShortestPathCalculator {
     // A utility function to find the vertex with minimum distance value,
     // from the set of vertices not yet included in shortest path tree
 
@@ -98,7 +95,7 @@ public class ShortestPathCalculator {
      * @param src Is the beginning node and what all the calculations are based on
      * @return an array with the minimum value to get to every node from the sourche where the scource is 0
      */
-    private static int[] dijkstra(int graph[][], int src)
+    private static int[] dijkstra(int[][] graph, int src)
     {
         int dist[] = new int[graph.length]; // The output array. dist[i] will hold
         // the shortest distance from src to i 

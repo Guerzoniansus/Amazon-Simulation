@@ -1,8 +1,5 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import com.nhlstenden.amazonsimulatie.models.robottasks.RetrieveFromTruckTask;
-import com.nhlstenden.amazonsimulatie.models.robottasks.RetrieveFromWarehouseTask;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,10 +10,10 @@ import java.util.Queue;
  * 3D object is. Ook implementeerd deze class de interface Updatable. Dit is omdat
  * een truck geupdate kan worden binnen de 3D wereld om zich zo voort te bewegen.
  */
-public class Truck extends MovingObject3D implements Updatable {
+class Truck extends MovingObject3D implements Updatable {
 
     private static final int STARTING_NODE_ID = 35;
-    private final Node ARRIVING_NODE;
+    private static final int ARRIVING_NODE_ID = 36;
 
     private enum Status {ARRIVING, PARKED, LEAVING}
     private Status status;
@@ -24,7 +21,9 @@ public class Truck extends MovingObject3D implements Updatable {
     private List<Stellage> gottenStellages;
 
     private int stellagesToDeliver = 3;
-    private int stellagesToGet = 3;
+
+    private static final int totalStellagesToGet = 3;
+    private int stellagesToGet = totalStellagesToGet;
 
     Truck(World world) {
         this(world.getGraph().getNode(STARTING_NODE_ID), world, 0, 0, 0);
@@ -38,7 +37,6 @@ public class Truck extends MovingObject3D implements Updatable {
 
         gottenStellages = new ArrayList<>();
         status = Status.ARRIVING;
-        ARRIVING_NODE = world.getGraph().getLoadingDockNode();
 
         setPath(getStartingPath());
     }
@@ -46,6 +44,7 @@ public class Truck extends MovingObject3D implements Updatable {
     @Override
     public boolean update() {
 
+        // Rotate around on arrival
         if (status == Status.PARKED) {
             if (rotationY == 180) {
                 rotationY = 0;
@@ -59,7 +58,6 @@ public class Truck extends MovingObject3D implements Updatable {
     @Override
     protected void onFinishedPath() {
         if (status == Status.ARRIVING) {
-            //rotationY += 180; // Turn around so the back faces the warehouse
 
             // Get all idle robots to go to truck
             world.getWarehouse().getIdleRobots().forEach(robot -> scheduleTruckToWarehouseOrder(robot));
@@ -79,7 +77,7 @@ public class Truck extends MovingObject3D implements Updatable {
         gottenStellages.add(stellage);
         stellage.die();
 
-        if (stellagesToGet == 0) {
+        if (stellagesToGet == 0 && gottenStellages.size() == totalStellagesToGet) {
             status = Status.LEAVING;
             setPath(getLeavingPath());
         }
@@ -90,8 +88,7 @@ public class Truck extends MovingObject3D implements Updatable {
      * @return The retrieved stellage
      */
     public Stellage takeStellage() {
-        Stellage stellage = new Stellage(StellageStatus.BEING_PROCESSED, node, world);
-        return stellage;
+        return new Stellage(StellageStatus.BEING_PROCESSED, node, world);
     }
 
     /**
@@ -133,7 +130,7 @@ public class Truck extends MovingObject3D implements Updatable {
      */
     private Queue<Node> getStartingPath() {
         Queue<Node> startingPath = new LinkedList<>();
-        startingPath.add(ARRIVING_NODE);
+        startingPath.add(world.getGraph().getNode(ARRIVING_NODE_ID));
         return startingPath;
     }
 

@@ -1,16 +1,10 @@
-package com.nhlstenden.amazonsimulatie.models.robottasks;
-
-import com.nhlstenden.amazonsimulatie.models.Node;
-import com.nhlstenden.amazonsimulatie.models.Robot;
-import com.nhlstenden.amazonsimulatie.models.RobotListener;
-import com.nhlstenden.amazonsimulatie.models.World;
-import com.nhlstenden.amazonsimulatie.utilities.ShortestPathCalculator;
+package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.stream.Collectors;
 
-public abstract class RobotTask implements RobotListener {
+abstract class RobotTask implements RobotListener {
 
     protected World world;
     protected Robot robot;

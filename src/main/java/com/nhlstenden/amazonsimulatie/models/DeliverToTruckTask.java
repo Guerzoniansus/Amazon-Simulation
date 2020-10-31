@@ -1,12 +1,10 @@
-package com.nhlstenden.amazonsimulatie.models.robottasks;
-
-import com.nhlstenden.amazonsimulatie.models.*;
+package com.nhlstenden.amazonsimulatie.models;
 
 import java.util.Queue;
 
-public class DeliverToTruckTask extends RobotTask {
+class DeliverToTruckTask extends RobotTask {
 
-    public DeliverToTruckTask(World world, Robot robot) {
+    DeliverToTruckTask(World world, Robot robot) {
         super(world, robot);
     }
 
@@ -19,7 +17,6 @@ public class DeliverToTruckTask extends RobotTask {
 
     @Override
     public void onFinishedPath() {
-        //robot.removeRobotListener(this);
         robot.getStellage().setStatus(StellageStatus.IN_TRUCK);
         world.getWarehouse().getTruck().addStellage(robot.getStellage());
         robot.removeStellage();

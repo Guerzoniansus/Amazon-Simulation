@@ -36,3 +36,4 @@
 33: PATH, 7, 11
 34: LOADING_DOCK, 1, 6
 35: PATH, -15, 6
+36: PATH, -2, 6

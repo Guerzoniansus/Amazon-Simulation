@@ -47,6 +47,7 @@ function init() {
     addSkybox();
     addGround();
     addLights();
+    addPath();
 
     /*
      * Hier wordt de socketcommunicatie geregeld. Er wordt een nieuwe websocket aangemaakt voor het webadres dat we in
@@ -57,7 +58,6 @@ function init() {
     socket.onmessage = function (event) {
         // Hier wordt het commando dat vanuit de server wordt gegeven uit elkaar gehaald
         let command = parseCommand(event.data);
-        console.log(command);
 
         switch (command.command) {
             case "object_update":
@@ -133,6 +133,30 @@ function addLights() {
     pointLight1.position.set(20, 20, 20);
     pointLight1.castShadow = true;
     scene.add(pointLight1);
+}
+
+/**
+ * Draws a path line on the ground
+ * @returns {Promise<void>} Idk what this does
+ */
+async function addPath() {
+
+    const textFile = "graph.txt";
+    const graph = await fetch(textFile).then(r => r.text());
+
+    const CONSTANT_Y = 0;
+    const vectors = [...graph.replace(/\/\/.+/g, '').matchAll(/(\d+): (\w+), (-?\d+), (-?\d+)/g)]
+        .map(([, id, type, x, z]) => new THREE.Vector3(+x, CONSTANT_Y, +z));
+
+    vectors.forEach(vector => {
+        const geometry = new THREE.BoxBufferGeometry(1, 0.1, 1);
+        const material = new THREE.MeshBasicMaterial({color: 0x000000, opacity: 0.3, transparent: true});
+        const square = new THREE.Mesh(geometry, material);
+        square.position.x = vector.x;
+        square.position.y = vector.y;
+        square.position.z = vector.z;
+        scene.add(square);
+    })
 }
 
 function onWindowResize() {

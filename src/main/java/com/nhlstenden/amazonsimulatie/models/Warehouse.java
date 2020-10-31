@@ -1,12 +1,9 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-import com.nhlstenden.amazonsimulatie.models.robottasks.IdleTask;
-
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Warehouse {
+class Warehouse {
 
     private World world;
     private World.WorldEditor worldEditor;
@@ -48,7 +45,6 @@ public class Warehouse {
      * @param robot The Robot that has now become idle
      */
     public void notifyNewRobotIsIdle(Robot robot) {
-        //TODO: Implement
         truck.notifyNewRobotAvailable(robot);
     }
 
@@ -100,6 +96,7 @@ public class Warehouse {
                 return false;
             }
 
+            // Check if there is already a stellage stored on this node
             for (Stellage stellage : getStellages()) {
                 if (stellage.hasStorageLocation()) {
                     if (stellage.getStorageLocation() == node) {

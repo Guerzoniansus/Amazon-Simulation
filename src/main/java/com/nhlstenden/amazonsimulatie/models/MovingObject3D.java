@@ -95,13 +95,12 @@ abstract class MovingObject3D extends Object3D {
 
     /**
      * Event that gets fired when the moving object has reached its destination.
-     * Needs to be overriden and implemented by child classes.
      */
     protected abstract void onFinishedPath();
 
     /**
      * Set the path to move through
-     * @param path A list of nodes
+     * @param path A list of Nodes
      */
     protected void setPath(Queue<Node> path) {
         this.path = path;

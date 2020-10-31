@@ -1,6 +1,6 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-public class Stellage extends Object3D implements Updatable {
+class Stellage extends Object3D implements Updatable {
 
     private Object3D parent;
     private Node storageLocation;
@@ -49,7 +49,7 @@ public class Stellage extends Object3D implements Updatable {
     }
 
     /**
-     * Remove this stellage's parent object (essentially sets it to null)
+     * Remove this stellage's parent object
      */
     public void removeParent() {
         parent = null;

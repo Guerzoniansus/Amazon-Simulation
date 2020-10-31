@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class Graph {
+class Graph {
 
     private final Map<Integer, Node> nodes;
 

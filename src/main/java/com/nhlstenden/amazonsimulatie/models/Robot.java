@@ -1,17 +1,11 @@
 package com.nhlstenden.amazonsimulatie.models;
 
-;import com.nhlstenden.amazonsimulatie.models.robottasks.IdleTask;
-import com.nhlstenden.amazonsimulatie.models.robottasks.RobotTask;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Queue;
 /*
  * Deze class stelt een robot voor. Hij impelementeerd de class Object3D, omdat het ook een
  * 3D object is. Ook implementeerd deze class de interface Updatable. Dit is omdat
  * een robot geupdate kan worden binnen de 3D wereld om zich zo voort te bewegen.
  */
-public class Robot extends MovingObject3D implements Updatable {
+class Robot extends MovingObject3D implements Updatable {
 
     private RobotTask task;
 

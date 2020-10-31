@@ -21,7 +21,7 @@ public abstract class Object3D {
 
     protected boolean readyToDie;
 
-    // This is just children can use this for some reason
+    // This is just so children (like ProxyObject3D) can use this if needed
     protected Object3D() {
 
     }
@@ -63,7 +63,6 @@ public abstract class Object3D {
          * javascript code wordt dit dan weer verder afgehandeld.
          */
         return this.getClass().getSimpleName().toLowerCase();
-        //return Robot.class.getSimpleName().toLowerCase();
     }
 
     /**
