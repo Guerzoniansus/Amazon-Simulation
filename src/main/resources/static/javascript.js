@@ -93,7 +93,8 @@ function addSkybox() {
     ];
 
     const skybox = new THREE.Mesh(boxGeometry, boxMaterials);
-    skybox.position.y = 24;
+    skybox.receiveShadow = true;
+    skybox.position.y = 24.90;
 
     scene.add(skybox);
 }
@@ -125,7 +126,7 @@ function addGround() {
  */
 function addLights() {
     let light = new THREE.AmbientLight(0xffffff);
-    light.intensity = 0.5;
+    light.intensity = 0.4;
     scene.add(light);
 
     let pointLight1 = new THREE.PointLight(0xffffff);

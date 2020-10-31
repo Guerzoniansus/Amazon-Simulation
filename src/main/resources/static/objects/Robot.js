@@ -6,6 +6,11 @@ function createRobot(addFunction, args) {
         let robot = gltf.scene;
         robot.scale.set(0.1, 0.1, 0.1);
 
+        robot.traverse(function(node) {
+            if (node.isMesh) {
+                node.castShadow = true;
+            }
+        });
 
         addFunction(robot, args);
     });
