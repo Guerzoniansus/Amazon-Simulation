@@ -16,7 +16,10 @@ class AmazonGraphCreator implements GraphCreator {
     private final String TEXT_FILE = "src/main/resources/graph.txt";
 
 
-
+    /**
+     * Matrix that specifies the distance between 2 neighbours.
+     * A distance of 0 means there is no connection between the 2 nodes.
+     */
     private final int DISTANCE_MATRIX[][] = new int[][] {
     //region DISTANCE_MATRIX
                     /*  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35*/
@@ -154,7 +157,7 @@ class AmazonGraphCreator implements GraphCreator {
      */
     private boolean isValidString(String text) {
         // Format:
-        // ID: TYPE, X, Z - NeighbourID=Distance (NeighbourID2=Distance... etc)
+        // ID: TYPE, X, Z
 
         if (StringUtils.countOccurrencesOf(text, ":") != 1) {
             return false;

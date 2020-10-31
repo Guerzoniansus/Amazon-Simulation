@@ -9,6 +9,10 @@ public class Graph {
 
     private final Map<Integer, Node> nodes;
 
+    /**
+     * A matrix with distances between 2 neighbours.
+     * A distnace of 0 means the 2 nodes are NOT neighbours.
+     */
     private final int[][] distanceMatrix;
 
     private final Node loadingDock;
@@ -45,7 +49,9 @@ public class Graph {
     }
 
     /**
-     * Get the distance matrix of this graph
+     * Get the distance matrix of this graph.
+     * The int at distanceMatrix[i][j] is the distance between Node i and Node j.
+     * A distance of 0 means the two nodes are not connected.
      * @return A neighbour distance matrix
      */
     public int[][] getDistanceMatrix() {

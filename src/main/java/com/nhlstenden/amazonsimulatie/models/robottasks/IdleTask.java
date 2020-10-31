@@ -24,7 +24,7 @@ public class IdleTask extends RobotTask implements RobotListener {
 
     @Override
     public void onFinishedPath() {
-        robot.removeRobotListener(this);
+        //robot.removeRobotListener(this);
 
         if (world.getWarehouse() != null) {
             world.getWarehouse().notifyNewRobotIsIdle(robot);
