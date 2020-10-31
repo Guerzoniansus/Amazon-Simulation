@@ -70,7 +70,7 @@ abstract class MovingObject3D extends Object3D {
             }
         }
 
-        //TODO: rotationY = determineRotation(node, currentDestination);
+        rotationY = determineRotation(node, currentDestination);
 
         /*
         ===== Check if reached destination =====
@@ -119,9 +119,9 @@ abstract class MovingObject3D extends Object3D {
      * @return The direction in degrees
      */
     private static double determineRotation(Node currentNode, Node targetNode) {
-        double offsetDegrees = 90;
+        double offsetDegrees = 180;
 
-        return Math.toDegrees(offsetDegrees + Math.atan2(targetNode.getZ() - currentNode.getZ(),
-                currentNode.getX() - targetNode.getX()));
+        return offsetDegrees + Math.toDegrees(Math.atan2(targetNode.getZ() - currentNode.getZ(),
+                targetNode.getX() - currentNode.getX()));
     }
 }
