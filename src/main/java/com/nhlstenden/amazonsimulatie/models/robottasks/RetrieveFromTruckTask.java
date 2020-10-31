@@ -1,18 +1,14 @@
 package com.nhlstenden.amazonsimulatie.models.robottasks;
 
 import com.nhlstenden.amazonsimulatie.models.*;
-import com.nhlstenden.amazonsimulatie.utilities.ShortestPathCalculator;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
-public class RetrieveFromTruckTask extends RobotTask implements RobotListener {
+public class RetrieveFromTruckTask extends RobotTask {
 
     public RetrieveFromTruckTask(World world, Robot robot) {
         super(world, robot);
-        robot.addRobotListener(this);
+        //robot.setRobotListener(this);
 
     }
 
@@ -25,7 +21,7 @@ public class RetrieveFromTruckTask extends RobotTask implements RobotListener {
 
     @Override
     public void onFinishedPath() {
-        robot.removeRobotListener(this);
+        //robot.removeRobotListener(this);
 
         Truck truck = world.getWarehouse().getTruck();
 

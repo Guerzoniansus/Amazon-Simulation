@@ -2,15 +2,14 @@ package com.nhlstenden.amazonsimulatie.models.robottasks;
 
 import com.nhlstenden.amazonsimulatie.models.*;
 
-import java.util.LinkedList;
 import java.util.Queue;
 
-public class RetrieveFromWarehouseTask extends RobotTask implements RobotListener {
+public class RetrieveFromWarehouseTask extends RobotTask {
 
     public RetrieveFromWarehouseTask(World world, Robot robot) {
         super(world, robot);
 
-        robot.addRobotListener(this);
+        //robot.setRobotListener(this);
 
         Stellage stellage = world.getWarehouse().getStellages()
                                                 .stream()
@@ -32,7 +31,7 @@ public class RetrieveFromWarehouseTask extends RobotTask implements RobotListene
 
     @Override
     public void onFinishedPath() {
-        robot.removeRobotListener(this);
+        //robot.removeRobotListener(this);
         robot.getStellage().removeStoragelocation();
         robot.getStellage().setParent(robot);
         robot.executeTask(new DeliverToTruckTask(world, robot));

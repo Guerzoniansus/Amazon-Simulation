@@ -13,7 +13,7 @@ import java.util.Queue;
  */
 public class Robot extends MovingObject3D implements Updatable {
 
-    private RobotListener task;
+    private RobotTask task;
 
     private Stellage stellage;
 
@@ -43,27 +43,10 @@ public class Robot extends MovingObject3D implements Updatable {
     }
 
     /**
-     * Register a RobotListener that listens to this robot instance
-     * @param listener The listener to add
-     */
-    public void addRobotListener(RobotListener listener) {
-        if (!(this.task instanceof IdleTask) && this.task != null)
-            throw new IllegalStateException(String.format("bro im already doing %s", this.task));
-        this.task = listener;
-    }
-
-    /**
-     * Remove a specific RobotListener that lsitens to this robot instance
-     * @param listener
-     */
-    public void removeRobotListener(RobotListener listener) {
-        this.task = null;
-    }
-
-    /**
      * Makes the robot execute their task by determining their path
      */
     public void executeTask(RobotTask newTask) {
+        this.task = newTask;
         setPath(newTask.getPath());
     }
 
