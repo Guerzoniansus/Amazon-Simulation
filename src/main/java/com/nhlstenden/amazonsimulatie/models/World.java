@@ -126,9 +126,8 @@ public class World implements Model {
     private void deleteObject(Object3D object) {
         if (worldObjects.contains(object)) {
             worldObjects.remove(object);
+            pcs.firePropertyChange(Model.DELETE_COMMAND, null, new ProxyObject3D(object));
         }
-
-        pcs.firePropertyChange(Model.DELETE_COMMAND, null, new ProxyObject3D(object));
     }
 
     /**
