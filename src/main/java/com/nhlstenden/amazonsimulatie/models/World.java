@@ -172,8 +172,4 @@ public class World implements Model {
         }
     }
 
-    public WorldEditor getWorldEditor()
-    {
-        return worldEditor;
-    }
 }
