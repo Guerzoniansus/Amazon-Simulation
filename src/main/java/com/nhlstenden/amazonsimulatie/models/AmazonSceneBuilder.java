@@ -47,7 +47,7 @@ class AmazonSceneBuilder implements SceneBuilder {
             String line = "";
             int lineCounter = 0;
 
-            while ((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) { // Read every line from text file
                 lineCounter++;
 
                 line = line.replaceAll(" ", "");

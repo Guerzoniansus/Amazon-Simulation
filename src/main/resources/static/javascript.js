@@ -1,7 +1,7 @@
 //import * as THREE from './three.min.js';
 //import "GLTFLoader";
 import {createObject} from "./objects.js";
-import {wall} from "./walls.js";
+import {walls} from "./walls.js";
 
 window.onload = () => {
     init();
@@ -47,7 +47,7 @@ function init() {
 
     addSkybox();
     addGround();
-    addWall();
+    addWalls();
     addLights();
     addPath();
 
@@ -126,11 +126,11 @@ function addGround() {
     scene.add(plane);
 }
 
-function addWall() {
+function addWalls() {
 
-wall.forEach(wall => {
-scene.add(wall);
-});
+    walls.forEach(wall => {
+        scene.add(wall);
+    });
 
 }
 
