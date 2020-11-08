@@ -1,6 +1,7 @@
 //import * as THREE from './three.min.js';
 //import "GLTFLoader";
 import {createObject} from "./objects.js";
+import {wall} from "./walls.js";
 
 window.onload = () => {
     init();
@@ -46,6 +47,7 @@ function init() {
 
     addSkybox();
     addGround();
+    addWall();
     addLights();
     addPath();
 
@@ -84,17 +86,18 @@ function addSkybox() {
     groundTexture.repeat.set(30, 30);
 
     const boxMaterials = [
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_2.jpg"), side: THREE.DoubleSide }), //LEFT
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_1.jpg"), side: THREE.DoubleSide }), //RIGHT
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_3.jpg"), side: THREE.DoubleSide }), //TOP
-        new THREE.MeshBasicMaterial({ map: groundTexture, side: THREE.DoubleSide }), //BOTTOM
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_5.jpg"), side: THREE.DoubleSide }), //FRONT
-        new THREE.MeshBasicMaterial({ map: textureLoader.load("textures/background_6.jpg"), side: THREE.DoubleSide }), //BACK
+        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/background_2.jpg"), side: THREE.DoubleSide }), //LEFT
+        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/background_1.jpg"), side: THREE.DoubleSide }), //RIGHT
+        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/background_3.jpg"), side: THREE.DoubleSide }), //TOP
+        new THREE.MeshStandardMaterial({ map: groundTexture, side: THREE.DoubleSide }), //BOTTOM
+        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/background_5.jpg"), side: THREE.DoubleSide }), //FRONT
+        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/background_6.jpg"), side: THREE.DoubleSide }), //BACK
     ];
 
     const skybox = new THREE.Mesh(boxGeometry, boxMaterials);
     skybox.receiveShadow = true;
-    skybox.position.y = 24.90;
+    skybox.roughness = 0.0;
+    skybox.position.y = 24.94;
 
     scene.add(skybox);
 }
@@ -103,7 +106,7 @@ function addSkybox() {
  * Add the floor pane to the scene
  */
 function addGround() {
-    let geometry = new THREE.PlaneGeometry(30, 30, 32);
+    let geometry = new THREE.PlaneGeometry(7.5, 11, 32);
     let material = new THREE.MeshStandardMaterial(
         {
         side: THREE.DoubleSide,
@@ -113,27 +116,48 @@ function addGround() {
         }
     );
 
+    const ground = [];
     let plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = Math.PI / 2.0;
-    plane.position.x = 15;
-    plane.position.z = 15;
+    plane.position.x = 4;
+    plane.position.y = -0.05
+    plane.position.z = 6;
     plane.receiveShadow = true;
     scene.add(plane);
 }
+
+function addWall() {
+
+wall.forEach(wall => {
+scene.add(wall);
+});
+
+}
+
 
 /**
  * Add the lights to the scene
  */
 function addLights() {
     let light = new THREE.AmbientLight(0xffffff);
-    light.intensity = 0.4;
+    light.intensity = 0.05;
     scene.add(light);
 
-    let pointLight1 = new THREE.PointLight(0xffffff);
-    pointLight1.intensity = 1;
-    pointLight1.position.set(20, 20, 20);
+    const intensity = 0.3;
+    let pointLight1 = new THREE.PointLight(0xffffff, intensity);
+    pointLight1.position.set(4, 3, 1);
     pointLight1.castShadow = true;
     scene.add(pointLight1);
+
+    let pointLight2 = new THREE.PointLight(0xffffff, intensity);
+        pointLight2.position.set(4, 3, 11);
+        pointLight2.castShadow = true;
+        scene.add(pointLight2);
+
+    let sun = new THREE.PointLight(0xf48037)
+    sun.intensity = 0.9
+    sun.position.set(15, 5, 90)
+    scene.add(sun);
 }
 
 /**
