@@ -1,7 +1,7 @@
 //import * as THREE from './three.min.js';
 //import "GLTFLoader";
 import {createObject} from "./objects.js";
-import {wall1, padding ,wall2, padding2, wall3, padding3, tinywall1, paddingtinywall1, tinywall2, paddingtinywall2, gate} from "./walls.js";
+import {wall} from "./walls.js";
 
 window.onload = () => {
     init();
@@ -97,7 +97,7 @@ function addSkybox() {
     const skybox = new THREE.Mesh(boxGeometry, boxMaterials);
     skybox.receiveShadow = true;
     skybox.roughness = 0.0;
-    skybox.position.y = 24.90;
+    skybox.position.y = 24.94;
 
     scene.add(skybox);
 }
@@ -116,9 +116,11 @@ function addGround() {
         }
     );
 
+    const ground = [];
     let plane = new THREE.Mesh(geometry, material);
     plane.rotation.x = Math.PI / 2.0;
     plane.position.x = 4;
+    plane.position.y = -0.05
     plane.position.z = 6;
     plane.receiveShadow = true;
     scene.add(plane);
@@ -126,17 +128,10 @@ function addGround() {
 
 function addWall() {
 
-  scene.add(wall1)
-  scene.add(padding)
-  scene.add(wall2)
-  scene.add(padding2)
-  scene.add(wall3)
-  scene.add(padding3)
-  scene.add(tinywall1)
-  scene.add(paddingtinywall1)
-  scene.add(tinywall2)
-  scene.add(paddingtinywall2)
-  scene.add(gate)
+wall.forEach(wall => {
+scene.add(wall);
+});
+
 }
 
 
@@ -145,21 +140,24 @@ function addWall() {
  */
 function addLights() {
     let light = new THREE.AmbientLight(0xffffff);
-    light.intensity = 0.2;
+    light.intensity = 0.05;
     scene.add(light);
 
-    let pointLight1 = new THREE.PointLight(0xffffff);
-    //pointLight1.add( new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({color: 0xffffff})))
-    pointLight1.intensity = 0.6;
+    const intensity = 0.3;
+    let pointLight1 = new THREE.PointLight(0xffffff, intensity);
     pointLight1.position.set(4, 3, 1);
     pointLight1.castShadow = true;
     scene.add(pointLight1);
 
-    let pointLight2 = new THREE.PointLight(0xffffff);
-        pointLight2.intensity = 0.6;
-        pointLight2.position.set(4, 3, 11.5);
+    let pointLight2 = new THREE.PointLight(0xffffff, intensity);
+        pointLight2.position.set(4, 3, 11);
         pointLight2.castShadow = true;
         scene.add(pointLight2);
+
+    let sun = new THREE.PointLight(0xf48037)
+    sun.intensity = 0.9
+    sun.position.set(15, 5, 90)
+    scene.add(sun);
 }
 
 /**

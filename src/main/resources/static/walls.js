@@ -1,7 +1,7 @@
 
-let y = 2;
+let y = 1.95;
+let ninetydegrees = Math.PI/2;
     const textureLoader = new THREE.TextureLoader();
-    let ninetydegrees = Math.PI/2;
     let wallshape1 = new THREE.BoxGeometry(7.599, 4, 0.302);
     let paddingshape1 = new THREE.BoxGeometry(7.7, 0.2, 0.4);
     let wallshape2 = new THREE.BoxGeometry(11.6, 4, 0.3);
@@ -9,6 +9,7 @@ let y = 2;
     let wallSection = new THREE.BoxGeometry(4.201, 4, 0.3);
     let paddingSection = new THREE.BoxGeometry(4, 0.2, 0.4)
     let gateSection = new THREE.BoxGeometry(3.2, 1, 0.5);
+    let invisibleroofshape = new THREE.BoxGeometry(7.5, 0.2, 11);
 
     const wall1frondback = textureLoader.load("textures/brick.jpg");
     wall1frondback.wrapS = THREE.RepeatWrapping;
@@ -17,12 +18,12 @@ let y = 2;
 
     let materialwall1 = [
 
-        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/brick.jpg"), color: 0x9C2C2C, side: THREE.DoubleSide }), //LEFT
-        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/brick.jpg"), color: 0x9C2C2C, side: THREE.DoubleSide }), //RIGHT
-        new THREE.MeshStandardMaterial({ color: 0x9C2C2C, side: THREE.DoubleSide }), //TOP
-        new THREE.MeshStandardMaterial({ color: 0x9C2C2C, side: THREE.DoubleSide }), //BOTTOM
-        new THREE.MeshStandardMaterial({ map: wall1frondback, color: 0x9C2C2C, side: THREE.DoubleSide }), //FRONT
-        new THREE.MeshStandardMaterial({ map: wall1frondback, color: 0x9C2C2C, side: THREE.DoubleSide }), //BACK
+        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/brick.jpg"), color: 0x9C2C2C, side: THREE.DoubleSide}), //LEFT
+        new THREE.MeshStandardMaterial({ map: textureLoader.load("textures/brick.jpg"), color: 0x9C2C2C, side: THREE.DoubleSide}), //RIGHT
+        new THREE.MeshStandardMaterial({ color: 0x9C2C2C, side: THREE.DoubleSide}), //TOP
+        new THREE.MeshStandardMaterial({ color: 0x9C2C2C, side: THREE.DoubleSide}), //BOTTOM
+        new THREE.MeshStandardMaterial({ map: wall1frondback, color: 0x9C2C2C, side: THREE.DoubleSide}), //FRONT
+        new THREE.MeshStandardMaterial({ map: wall1frondback, color: 0x9C2C2C, side: THREE.DoubleSide}), //BACK
     ];
     const wall2frondback = textureLoader.load("textures/brick.jpg");
     wall2frondback.wrapS = THREE.RepeatWrapping;
@@ -63,77 +64,35 @@ let y = 2;
         color: 0x000080
         }
     );
-    let wall1 = new THREE.Mesh(wallshape1, materialwall1);
-    wall1.position.y = y;
-    wall1.position.z = 0.35;
-    wall1.position.x = 4;
-    wall1.receiveShadow = true;
 
-    let padding = new THREE.Mesh(paddingshape1, materialpadding)
-    padding.position.y = 0.1;
-    padding.position.z = 0.35;
-    padding.position.x = 4;
-    padding.receiveShadow = true;
+    let invisiblematerial = new THREE.MeshStandardMaterial(
+    {
+    transparent: true,
+     opacity: 0.0
+    });
 
-    let wall2 = new THREE.Mesh(wallshape2, materialwall2)
-    wall2.position.y = y;
-    wall2.position.x = 7.65;
-    wall2.position.z = 6;
-    wall2.rotation.y = ninetydegrees;
-    wall2.receiveShadow = true;
+var wall = [];
 
-    let padding2 = new THREE.Mesh(paddingshape2, materialpadding)
-    padding2.position.y = 0.1;
-    padding2.position.x = 7.65;
-    padding2.position.z = 6;
-    padding2.rotation.y = ninetydegrees;
-    padding2.receiveShadow = true;
+    wall.push(createWall(4, y, 0.35, 0, wallshape1, materialwall1));
+    wall.push(createWall(4, 0.05, 0.35, 0, paddingshape1, materialpadding));
+    wall.push(createWall(7.65, y, 6, ninetydegrees, wallshape2, materialwall2));
+    wall.push(createWall(7.65, 0.05, 6, ninetydegrees, paddingshape2, materialpadding));
+    wall.push(createWall(4, y, 11.65, 0, wallshape1, materialwall1));
+    wall.push(createWall(4, 0.05, 11.65, 0, paddingshape1, materialpadding));
+    wall.push(createWall(0.35, y, 9.7, ninetydegrees, wallSection, materialwallSection));
+    wall.push(createWall(0.35, 0.05, 9.7, ninetydegrees, paddingSection, materialpadding));
+    wall.push(createWall(0.35, y, 2.3, ninetydegrees, wallSection, materialwallSection));
+    wall.push(createWall(0.35, 0.05, 2.3, ninetydegrees, paddingSection, materialpadding));
+    wall.push(createWall(0.15, 3.45, 6, ninetydegrees, gateSection, materialgate));
 
-    let wall3 = new THREE.Mesh(wallshape1, materialwall1)
-    wall3.position.y = y;
-    wall3.position.z = 11.65
-    wall3.position.x = 4;
-    wall3.receiveShadow = true;
+    function createWall(x, y, z, rotationY, geometry, material) {
+    let wall =  new THREE.Mesh(geometry, material);
+    wall.receiveShadow = true;
+    wall.position.x = x;
+    wall.position.y = y;
+    wall.position.z = z;
+    wall.rotation.y = rotationY;
+    return wall;
+    }
 
-    let padding3 = new THREE.Mesh(paddingshape1, materialpadding)
-    padding3.position.y = 0.1;
-    padding3.position.z = 11.65;
-    padding3.position.x = 4;
-    padding3.receiveShadow = true;
-
-    let tinywall1 = new THREE.Mesh(wallSection, materialwallSection)
-    tinywall1.position.y = y;
-    tinywall1.position.x = 0.35;
-    tinywall1.position.z = 9.7;
-    tinywall1.rotation.y = ninetydegrees;
-    tinywall1.receiveShadow = true;
-
-    let paddingtinywall1 = new THREE.Mesh(paddingSection, materialpadding)
-    paddingtinywall1.position.y = 0.1;
-    paddingtinywall1.position.x = 0.35;
-    paddingtinywall1.position.z = 9.8;
-    paddingtinywall1.rotation.y = ninetydegrees;
-    paddingtinywall1.receiveShadow = true;
-
-    let tinywall2 = new THREE.Mesh(wallSection, materialwallSection)
-    tinywall2.position.y = y;
-    tinywall2.position.x = 0.35;
-    tinywall2.position.z = 2.3;
-    tinywall2.rotation.y = ninetydegrees;
-    tinywall2.receiveShadow = true;
-
-    let paddingtinywall2 = new THREE.Mesh(paddingSection, materialpadding)
-    paddingtinywall2.position.y = 0.1;
-    paddingtinywall2.position.x = 0.35;
-    paddingtinywall2.position.z = 2.4;
-    paddingtinywall2.rotation.y = ninetydegrees;
-    paddingtinywall2.receiveShadow = true;
-
-    let gate = new THREE.Mesh(gateSection, materialgate)
-    gate.position.y = 3.5;
-    gate.position.z = 6;
-    gate.position.x = 0.15;
-    gate.rotation.y = ninetydegrees;
-    gate.receiveShadow = true;
-
- export {wall1, padding ,wall2, padding2, wall3, padding3, tinywall1, paddingtinywall1, tinywall2, paddingtinywall2, gate};
+ export {wall};
